@@ -10,6 +10,7 @@ import { ChatDetailScreen } from './components/ChatDetailScreen';
 import { ProfileScreen } from './components/ProfileScreen';
 import { SendIntroductionScreen } from './components/SendIntroductionScreen';
 import { AddToCircleScreen } from './components/AddToCircleScreen';
+import { NotFoundScreen } from './components/NotFoundScreen';
 import { Toaster } from './components/ui/sonner';
 
 export type Person = {
@@ -22,6 +23,7 @@ export type Person = {
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('login');
+  const [screenHistory, setScreenHistory] = useState<string[]>(['login']);
   const [preSelectedPerson, setPreSelectedPerson] = useState<Person | null>(null);
 
   const handleNavigate = (screen: string, data?: any) => {
@@ -30,7 +32,22 @@ export default function App() {
     } else if (screen !== 'send-introduction') {
       setPreSelectedPerson(null);
     }
+    setScreenHistory((prev) => [...prev, screen]);
     setCurrentScreen(screen);
+  };
+
+  const handleGoBack = () => {
+    setScreenHistory((prev) => {
+      if (prev.length > 1) {
+        const next = [...prev];
+        next.pop(); // remove current screen
+        const last = next[next.length - 1];
+        setCurrentScreen(last || 'home');
+        return next;
+      }
+      setCurrentScreen('home');
+      return ['home'];
+    });
   };
 
   const renderScreen = () => {
@@ -57,7 +74,13 @@ export default function App() {
       case 'add-to-circle':
         return <AddToCircleScreen onNavigate={handleNavigate} />;
       default:
-        return <LoginScreen onNavigate={handleNavigate} />;
+        return (
+          <NotFoundScreen
+            unmatchedScreen={currentScreen}
+            onNavigate={handleNavigate}
+            onGoBack={handleGoBack}
+          />
+        );
     }
   };
 
