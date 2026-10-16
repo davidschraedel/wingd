@@ -1,5 +1,5 @@
 # Wingd - Online Dating Prototype
-2025
+*David Schraedel • 2025*
 
 A referral-based dating app that brings word-of-mouth matchmaking into modern online dating. Instead of relying on algorithmic feeds and endless swiping, Wingd empowers friends to act as wingmen or wingwomen, facilitating warm introductions, trusted connections, and peer-driven dating within real-world social circles.
 
