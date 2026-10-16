@@ -18,7 +18,7 @@ import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useState, useEffect } from "react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 import { Person } from "../App";
 
 interface SendIntroductionScreenProps {

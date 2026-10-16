@@ -34,7 +34,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { useState } from "react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 interface CircleScreenProps {
   onNavigate: (screen: string, data?: any) => void;

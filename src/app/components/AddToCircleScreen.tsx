@@ -20,7 +20,7 @@ import {
   TabsTrigger,
 } from "./ui/tabs";
 import { useState } from "react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 interface AddToCircleScreenProps {
   onNavigate: (screen: string) => void;
