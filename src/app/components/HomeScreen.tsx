@@ -4,8 +4,9 @@ import {
   Heart,
   MessageCircle,
   UserPlus,
-  Mail,
   Sparkles,
+  ChevronRight,
+  Check,
 } from "lucide-react";
 import {
   Avatar,
@@ -14,7 +15,7 @@ import {
 } from "./ui/avatar";
 
 interface HomeScreenProps {
-  onNavigate: (screen: string) => void;
+  onNavigate: (screen: string, data?: any) => void;
 }
 
 export function HomeScreen({ onNavigate }: HomeScreenProps) {
@@ -42,27 +43,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
     },
   ];
 
-  const quickActions = [
-    {
-      icon: Heart,
-      label: "Make Intro",
-      color: "#1da6e0",
-      screen: "send-introduction",
-    },
-    {
-      icon: UserPlus,
-      label: "Add Friend",
-      color: "#77d75b",
-      screen: "circle",
-    },
-    {
-      icon: Mail,
-      label: "View Intros",
-      color: "#1da6e0",
-      screen: "introductions",
-    },
-  ];
-
   const recentActivity = [
     {
       id: 1,
@@ -74,6 +54,9 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       time: "2h ago",
       avatar: "/avatars/sarah.jpg",
       fallback: "SJ",
+      screen: "introductions",
+      navData: { tab: "pending" },
+      actionLabel: "Review intro",
     },
     {
       id: 2,
@@ -85,6 +68,9 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       time: "5h ago",
       avatar: "/avatars/mike.jpg",
       fallback: "MC",
+      screen: "circle",
+      navData: { tab: "invites" },
+      actionLabel: "View intro",
     },
     {
       id: 3,
@@ -96,6 +82,9 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       time: "1d ago",
       avatar: "/avatars/emily.jpg",
       fallback: "ER",
+      screen: "circle",
+      navData: { tab: "circle", personId: 3 },
+      actionLabel: "View in circle",
     },
   ];
 
@@ -172,65 +161,109 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       {/* Recent Activity */}
       <div className="px-6">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
-          <h3 className="mb-3">Recent Activity</h3>
+          <h3 className="mb-3 font-semibold text-gray-900">Recent Activity</h3>
           <div className="space-y-3">
-            {recentActivity.map((activity, index) => (
-              <motion.div
-                key={activity.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + index * 0.1 }}
-                className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer"
-              >
-                <div className="flex items-start gap-3">
-                  <Avatar className="w-12 h-12 border-2 border-gray-100">
-                    <AvatarImage
-                      src={activity.avatar}
-                      alt={activity.name}
-                    />
-                    <AvatarFallback
-                      className={`${activity.type === "introduction"
-                        ? "bg-gradient-to-br from-[#ff9883] to-[#ffb8a8] text-white"
-                        : "bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white"
-                        }`}
-                    >
-                      {activity.fallback}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="mb-1">
-                      <span>{activity.name}</span>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">
-                      {activity.action}
-                      {activity.target && (
-                        <span className="text-[#1da6e0] ml-1">
-                          {activity.target}
-                        </span>
-                      )}
-                    </p>
-                    {activity.tags.length > 0 && (
-                      <div className="flex gap-2 flex-wrap">
-                        {activity.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className={`px-3 py-1 rounded-full text-xs ${activity.type === "introduction"
-                              ? "bg-[#FFF0ED] text-[#ff9883]"
-                              : "bg-[#F0F9ED] text-[#77d75b]"
-                              }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
+            {recentActivity.map((activity, index) => {
+              const badgeConfig = {
+                introduction: {
+                  badgeBg: "bg-[#ff7961]",
+                  icon: <Heart size={10} className="text-white fill-white" />,
+                  fallbackBg: "bg-gradient-to-br from-[#ff9883] to-[#ffb8a8] text-white",
+                  tagStyle: "bg-[#FFF0ED] text-[#ff9883]",
+                },
+                accepted: {
+                  badgeBg: "bg-[#1da6e0]",
+                  icon: <Check size={10} className="text-white" strokeWidth={3} />,
+                  fallbackBg: "bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] text-white",
+                  tagStyle: "bg-[#F0F9FF] text-[#1da6e0]",
+                },
+                circle: {
+                  badgeBg: "bg-[#77d75b]",
+                  icon: <UserPlus size={10} className="text-white" />,
+                  fallbackBg: "bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white",
+                  tagStyle: "bg-[#F0F9ED] text-[#77d75b]",
+                },
+              }[activity.type as "introduction" | "accepted" | "circle"];
+
+              return (
+                <motion.div
+                  key={activity.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  onClick={() => onNavigate(activity.screen, activity.navData)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onNavigate(activity.screen, activity.navData);
+                    }
+                  }}
+                  className="group bg-white rounded-2xl p-4 shadow-sm hover:shadow-md border border-gray-100 hover:border-[#1da6e0]/30 transition-all cursor-pointer select-none active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#1da6e0]/40"
+                >
+                  <div className="flex items-start gap-3.5">
+                    <div className="relative shrink-0">
+                      <Avatar className="w-12 h-12 border-2 border-gray-100 group-hover:border-[#1da6e0]/20 transition-colors">
+                        <AvatarImage
+                          src={activity.avatar}
+                          alt={activity.name}
+                        />
+                        <AvatarFallback className={badgeConfig.fallbackBg}>
+                          {activity.fallback}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div
+                        className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full ${badgeConfig.badgeBg} flex items-center justify-center border-2 border-white shadow-xs`}
+                      >
+                        {badgeConfig.icon}
                       </div>
-                    )}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className="font-semibold text-gray-900 group-hover:text-[#1da6e0] transition-colors truncate">
+                          {activity.name}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 mb-2 leading-snug">
+                        {activity.action}
+                        {activity.target && (
+                          <span className="text-[#1da6e0] font-medium ml-1">
+                            {activity.target}
+                          </span>
+                        )}
+                      </p>
+                      {activity.tags.length > 0 && (
+                        <div className="flex gap-1.5 flex-wrap">
+                          {activity.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeConfig.tagStyle}`}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col items-end justify-between self-stretch shrink-0 pl-1">
+                      <span className="text-xs text-gray-400">
+                        {activity.time}
+                      </span>
+                      <div className="flex items-center gap-1 text-xs font-medium text-gray-400 group-hover:text-[#1da6e0] transition-colors mt-2">
+                        <span className="hidden sm:inline">{activity.actionLabel}</span>
+                        <ChevronRight
+                          size={15}
+                          className="group-hover:translate-x-1 transition-transform"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-xs text-gray-400">
-                    {activity.time}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

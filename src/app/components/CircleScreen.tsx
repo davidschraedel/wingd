@@ -43,7 +43,8 @@ import {
   DialogDescription,
   DialogFooter,
 } from "./ui/dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import { toast } from "sonner";
 
 function formatNamesList(names: string[]): string {
@@ -60,6 +61,9 @@ interface CircleScreenProps {
 export function CircleScreen({
   onNavigate,
 }: CircleScreenProps) {
+  const location = useLocation();
+  const initialTab = (location.state as any)?.tab || "circle";
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [searchQuery, setSearchQuery] = useState("");
   const [connections, setConnections] = useState([
     {
@@ -256,6 +260,19 @@ export function CircleScreen({
   const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<typeof connections[0] | null>(null);
 
+  useEffect(() => {
+    const state = location.state as any;
+    if (state?.tab) {
+      setActiveTab(state.tab);
+    }
+    if (state?.personId) {
+      const person = connections.find((c) => c.id === state.personId);
+      if (person) {
+        setSelectedProfile(person);
+      }
+    }
+  }, [location.state, connections]);
+
   const toggleSelectToRemove = (id: number) => {
     setSelectedToRemove((prev) => {
       const next = new Set(prev);
@@ -360,7 +377,7 @@ export function CircleScreen({
       {/* Content */}
       <div className="px-6 mt-6">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
-          <Tabs defaultValue="circle" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
               <TabsTrigger
                 value="circle"

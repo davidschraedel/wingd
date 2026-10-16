@@ -29,7 +29,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import { toast } from "sonner";
 
 interface IntroductionsScreenProps {
@@ -39,6 +40,16 @@ interface IntroductionsScreenProps {
 export function IntroductionsScreen({
   onNavigate,
 }: IntroductionsScreenProps) {
+  const location = useLocation();
+  const initialTab = (location.state as any)?.tab || "pending";
+  const [activeTab, setActiveTab] = useState(initialTab);
+
+  useEffect(() => {
+    if ((location.state as any)?.tab) {
+      setActiveTab((location.state as any).tab);
+    }
+  }, [location.state]);
+
   const [collapsedIntros, setCollapsedIntros] = useState<number[]>([]);
 
   const toggleIntro = (id: number) => {
@@ -169,7 +180,7 @@ export function IntroductionsScreen({
       {/* Tabs */}
       <div className="px-6 mt-6">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
-          <Tabs defaultValue="pending" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
               <TabsTrigger
                 value="pending"
