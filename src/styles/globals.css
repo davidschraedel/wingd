@@ -186,6 +186,7 @@
 
 html {
   font-size: var(--font-size);
+  scrollbar-gutter: stable;
 }
 
 /* Custom scrollbar styles for modern mobile look - only on scrollable containers */

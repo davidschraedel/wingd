@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from "motion/react";
-import { BottomNav } from "./BottomNav";
 import {
   Avatar,
   AvatarFallback,
@@ -40,9 +39,14 @@ interface IntroductionsScreenProps {
 export function IntroductionsScreen({
   onNavigate,
 }: IntroductionsScreenProps) {
-  const [expandedIntro, setExpandedIntro] = useState<
-    number | null
-  >(null);
+  const [collapsedIntros, setCollapsedIntros] = useState<number[]>([]);
+
+  const toggleIntro = (id: number) => {
+    setCollapsedIntros((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
   const [pendingIntros, setPendingIntros] = useState([
     {
       id: 1,
@@ -155,8 +159,9 @@ export function IntroductionsScreen({
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <h1 className="text-white">Introduced</h1>
           <p className="text-white/90 text-sm mt-1">
-            Your received introductions and matches
+            People introduced to you by your circle
           </p>
         </div>
       </div>
@@ -239,16 +244,11 @@ export function IntroductionsScreen({
                         </div>
                       </div>
                       <button
-                        onClick={() =>
-                          setExpandedIntro(
-                            expandedIntro === intro.id
-                              ? null
-                              : intro.id,
-                          )
-                        }
+                        onClick={() => toggleIntro(intro.id)}
                         className="text-gray-400 hover:text-[#1da6e0] transition-colors"
+                        aria-label={!collapsedIntros.includes(intro.id) ? "Collapse introduction details" : "Expand introduction details"}
                       >
-                        {expandedIntro === intro.id ? (
+                        {!collapsedIntros.includes(intro.id) ? (
                           <ChevronUp size={20} />
                         ) : (
                           <ChevronDown size={20} />
@@ -256,8 +256,8 @@ export function IntroductionsScreen({
                       </button>
                     </div>
 
-                    <AnimatePresence>
-                      {expandedIntro === intro.id && (
+                    <AnimatePresence initial={false}>
+                      {!collapsedIntros.includes(intro.id) && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
@@ -419,10 +419,6 @@ export function IntroductionsScreen({
         </div>
       </div>
 
-      <BottomNav
-        active="introductions"
-        onNavigate={onNavigate}
-      />
     </div>
   );
 }

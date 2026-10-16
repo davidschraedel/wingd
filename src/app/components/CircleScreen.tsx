@@ -8,7 +8,6 @@ import {
   Mail,
   Clock,
 } from "lucide-react";
-import { BottomNav } from "./BottomNav";
 import {
   Avatar,
   AvatarFallback,
@@ -685,7 +684,6 @@ export function CircleScreen({
         </div>
       </div>
 
-      <BottomNav active="circle" onNavigate={onNavigate} />
     </div>
   );
 }

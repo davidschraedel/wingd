@@ -7,7 +7,6 @@ import {
   Mail,
   Sparkles,
 } from "lucide-react";
-import { BottomNav } from "./BottomNav";
 import {
   Avatar,
   AvatarFallback,
@@ -29,7 +28,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
     },
     {
       icon: Heart,
-      label: "Received",
+      label: "Introduced",
       value: 5,
       color: "#ff9883",
       screen: "introductions",
@@ -236,7 +235,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         </div>
       </div>
 
-      <BottomNav active="home" onNavigate={onNavigate} />
     </div>
   );
 }

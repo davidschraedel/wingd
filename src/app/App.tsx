@@ -19,6 +19,7 @@ import { ProfileScreen } from './components/ProfileScreen';
 import { SendIntroductionScreen } from './components/SendIntroductionScreen';
 import { AddToCircleScreen } from './components/AddToCircleScreen';
 import { NotFoundScreen } from './components/NotFoundScreen';
+import { BottomNav } from './components/BottomNav';
 import { Toaster } from './components/ui/sonner';
 
 export type Person = {
@@ -96,6 +97,16 @@ export function AppRoutes() {
     navigate(path, { state: data });
   };
 
+  const navMap: Record<string, string> = {
+    '/home': 'home',
+    '/circle': 'circle',
+    '/network': 'circle',
+    '/introductions': 'introductions',
+    '/chats': 'chats',
+    '/profile': 'profile',
+  };
+  const activeNav = navMap[location.pathname];
+
   return (
     <div className="min-h-screen bg-[#FAFAFA] w-full">
       <ScrollToTop />
@@ -126,6 +137,9 @@ export function AppRoutes() {
           </Routes>
         </motion.div>
       </AnimatePresence>
+      {activeNav && (
+        <BottomNav active={activeNav} onNavigate={handleNavigate} />
+      )}
       <Toaster position="top-center" richColors />
     </div>
   );

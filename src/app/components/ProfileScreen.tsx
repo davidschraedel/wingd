@@ -16,7 +16,6 @@ import {
   Info,
   Check,
 } from "lucide-react";
-import { BottomNav } from "./BottomNav";
 import {
   Avatar,
   AvatarFallback,
@@ -731,7 +730,6 @@ export function ProfileScreen({
         </DialogContent>
       </Dialog>
 
-      <BottomNav active="profile" onNavigate={onNavigate} />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { Search } from "lucide-react";
-import { BottomNav } from "./BottomNav";
 import {
   Avatar,
   AvatarFallback,
@@ -158,7 +157,6 @@ export function ChatsScreen({ onNavigate }: ChatsScreenProps) {
         </div>
       </div>
 
-      <BottomNav active="chats" onNavigate={onNavigate} />
     </div>
   );
 }
