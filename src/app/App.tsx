@@ -1,4 +1,12 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
 import { LoginScreen } from './components/LoginScreen';
 import { SignupScreen } from './components/SignupScreen';
@@ -21,83 +29,115 @@ export type Person = {
   interests: string[];
 };
 
-export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('login');
-  const [screenHistory, setScreenHistory] = useState<string[]>(['login']);
-  const [preSelectedPerson, setPreSelectedPerson] = useState<Person | null>(null);
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function SendIntroductionRoute({
+  onNavigate,
+}: {
+  onNavigate: (screen: string, data?: any) => void;
+}) {
+  const location = useLocation();
+  const person = (location.state as any)?.person ?? null;
+  return (
+    <SendIntroductionScreen
+      onNavigate={onNavigate}
+      preSelectedPerson={person}
+    />
+  );
+}
+
+function NotFoundRoute({
+  onNavigate,
+}: {
+  onNavigate: (screen: string) => void;
+}) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // Strip leading slash for display, e.g. "/settings" -> "settings"
+  const unmatched = location.pathname.replace(/^\//, '') || 'unknown';
+
+  return (
+    <NotFoundScreen
+      unmatchedScreen={unmatched}
+      onNavigate={onNavigate}
+      onGoBack={() => {
+        if (window.history.length > 1) {
+          navigate(-1);
+        } else {
+          onNavigate('home');
+        }
+      }}
+    />
+  );
+}
+
+export function AppRoutes() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavigate = (screen: string, data?: any) => {
-    if (screen === 'send-introduction' && data?.person) {
-      setPreSelectedPerson(data.person);
-    } else if (screen !== 'send-introduction') {
-      setPreSelectedPerson(null);
+    if (screen === 'back') {
+      navigate(-1);
+      return;
     }
-    setScreenHistory((prev) => [...prev, screen]);
-    setCurrentScreen(screen);
-  };
-
-  const handleGoBack = () => {
-    setScreenHistory((prev) => {
-      if (prev.length > 1) {
-        const next = [...prev];
-        next.pop(); // remove current screen
-        const last = next[next.length - 1];
-        setCurrentScreen(last || 'home');
-        return next;
-      }
-      setCurrentScreen('home');
-      return ['home'];
-    });
-  };
-
-  const renderScreen = () => {
-    switch (currentScreen) {
-      case 'login':
-        return <LoginScreen onNavigate={handleNavigate} />;
-      case 'signup':
-        return <SignupScreen onNavigate={handleNavigate} />;
-      case 'home':
-        return <HomeScreen onNavigate={handleNavigate} />;
-      case 'circle':
-      case 'network':
-        return <CircleScreen onNavigate={handleNavigate} />;
-      case 'introductions':
-        return <IntroductionsScreen onNavigate={handleNavigate} />;
-      case 'chats':
-        return <ChatsScreen onNavigate={handleNavigate} />;
-      case 'chat-detail':
-        return <ChatDetailScreen onNavigate={handleNavigate} />;
-      case 'profile':
-        return <ProfileScreen onNavigate={handleNavigate} />;
-      case 'send-introduction':
-        return <SendIntroductionScreen onNavigate={handleNavigate} preSelectedPerson={preSelectedPerson} />;
-      case 'add-to-circle':
-        return <AddToCircleScreen onNavigate={handleNavigate} />;
-      default:
-        return (
-          <NotFoundScreen
-            unmatchedScreen={currentScreen}
-            onNavigate={handleNavigate}
-            onGoBack={handleGoBack}
-          />
-        );
+    let path = screen.startsWith('/') ? screen : `/${screen}`;
+    if (path === '/network') {
+      path = '/circle';
     }
+    if (location.pathname === path && !data) {
+      return;
+    }
+    navigate(path, { state: data });
   };
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] w-full">
+      <ScrollToTop />
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentScreen}
+          key={location.pathname}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.15 }}
         >
-          {renderScreen()}
+          <Routes location={location}>
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/home" element={<HomeScreen onNavigate={handleNavigate} />} />
+            <Route path="/circle" element={<CircleScreen onNavigate={handleNavigate} />} />
+            <Route path="/network" element={<Navigate to="/circle" replace />} />
+            <Route path="/introductions" element={<IntroductionsScreen onNavigate={handleNavigate} />} />
+            <Route path="/chats" element={<ChatsScreen onNavigate={handleNavigate} />} />
+            <Route path="/chat-detail" element={<ChatDetailScreen onNavigate={handleNavigate} />} />
+            <Route path="/profile" element={<ProfileScreen onNavigate={handleNavigate} />} />
+            <Route
+              path="/send-introduction"
+              element={<SendIntroductionRoute onNavigate={handleNavigate} />}
+            />
+            <Route path="/add-to-circle" element={<AddToCircleScreen onNavigate={handleNavigate} />} />
+            <Route path="/login" element={<LoginScreen onNavigate={handleNavigate} />} />
+            <Route path="/signup" element={<SignupScreen onNavigate={handleNavigate} />} />
+            <Route path="*" element={<NotFoundRoute onNavigate={handleNavigate} />} />
+          </Routes>
         </motion.div>
       </AnimatePresence>
       <Toaster position="top-center" richColors />
     </div>
+  );
+}
+
+export default function App() {
+  const basename = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/';
+
+  return (
+    <BrowserRouter basename={basename}>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }

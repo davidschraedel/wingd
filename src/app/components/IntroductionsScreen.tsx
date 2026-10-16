@@ -157,7 +157,7 @@ export function IntroductionsScreen({
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
           <p className="text-white/90 text-sm mt-1">
-            Your dating connections and pending intros
+            Your received introductions and matches
           </p>
         </div>
       </div>
@@ -166,259 +166,259 @@ export function IntroductionsScreen({
       <div className="px-6 mt-6">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
           <Tabs defaultValue="pending" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
-            <TabsTrigger
-              value="pending"
-              className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1da6e0] data-[state=active]:to-[#05638f] data-[state=active]:text-white"
-            >
-              Pending ({pendingIntros.length})
-            </TabsTrigger>
-            <TabsTrigger
-              value="accepted"
-              className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1da6e0] data-[state=active]:to-[#05638f] data-[state=active]:text-white"
-            >
-              Matches ({acceptedIntros.length})
-            </TabsTrigger>
-          </TabsList>
+            <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
+              <TabsTrigger
+                value="pending"
+                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1da6e0] data-[state=active]:to-[#05638f] data-[state=active]:text-white"
+              >
+                Pending ({pendingIntros.length})
+              </TabsTrigger>
+              <TabsTrigger
+                value="accepted"
+                className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#1da6e0] data-[state=active]:to-[#05638f] data-[state=active]:text-white"
+              >
+                Matches ({acceptedIntros.length})
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="pending" className="space-y-4">
-            {pendingIntros.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#F0ABFC] to-[#F5D0FE] rounded-full flex items-center justify-center mx-auto mb-4 opacity-20">
-                  <Check size={32} className="text-white" />
+            <TabsContent value="pending" className="space-y-4">
+              {pendingIntros.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#F0ABFC] to-[#F5D0FE] rounded-full flex items-center justify-center mx-auto mb-4 opacity-20">
+                    <Check size={32} className="text-white" />
+                  </div>
+                  <p className="text-gray-500">
+                    No pending introductions
+                  </p>
+                  <p className="text-sm text-gray-400 mt-1">
+                    You're all caught up!
+                  </p>
                 </div>
-                <p className="text-gray-500">
-                  No pending introductions
-                </p>
-                <p className="text-sm text-gray-400 mt-1">
-                  You're all caught up!
-                </p>
-              </div>
-            ) : (
-              pendingIntros.map((intro, index) => (
-                <motion.div
-                  key={intro.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-5 shadow-sm border-2 border-[#1da6e0]/10"
-                >
-                  <div className="flex items-start gap-4 mb-4">
-                    <Avatar className="w-16 h-16 border-2 border-[#1da6e0]/30">
-                      {intro.avatar && (
-                        <AvatarImage
-                          src={intro.avatar}
-                          alt={intro.name}
-                        />
-                      )}
-                      <AvatarFallback className="bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] text-white">
-                        {intro.fallback}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span>{intro.name}</span>
-                        <span className="text-gray-500">
-                          {intro.age}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-500 mb-2">
-                        Introduced by{" "}
-                        <span className="text-[#1da6e0]">
-                          {intro.introducedBy}
-                        </span>
-                      </p>
-                      <div className="flex gap-2 flex-wrap">
-                        {intro.interests.map((interest) => (
-                          <span
-                            key={interest}
-                            className="px-3 py-1 bg-[#E3F5FF] text-[#1da6e0] rounded-full text-xs"
-                          >
-                            {interest}
+              ) : (
+                pendingIntros.map((intro, index) => (
+                  <motion.div
+                    key={intro.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white rounded-2xl p-5 shadow-sm border-2 border-[#1da6e0]/10"
+                  >
+                    <div className="flex items-start gap-4 mb-4">
+                      <Avatar className="w-16 h-16 border-2 border-[#1da6e0]/30">
+                        {intro.avatar && (
+                          <AvatarImage
+                            src={intro.avatar}
+                            alt={intro.name}
+                          />
+                        )}
+                        <AvatarFallback className="bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] text-white">
+                          {intro.fallback}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span>{intro.name}</span>
+                          <span className="text-gray-500">
+                            {intro.age}
                           </span>
-                        ))}
-                      </div>
-                    </div>
-                    <button
-                      onClick={() =>
-                        setExpandedIntro(
-                          expandedIntro === intro.id
-                            ? null
-                            : intro.id,
-                        )
-                      }
-                      className="text-gray-400 hover:text-[#1da6e0] transition-colors"
-                    >
-                      {expandedIntro === intro.id ? (
-                        <ChevronUp size={20} />
-                      ) : (
-                        <ChevronDown size={20} />
-                      )}
-                    </button>
-                  </div>
-
-                  <AnimatePresence>
-                    {expandedIntro === intro.id && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="mb-4 overflow-hidden"
-                      >
-                        <div className="bg-[#E3F5FF]/30 rounded-xl p-4">
-                          <p className="text-sm text-gray-700 mb-3">
-                            {intro.bio}
-                          </p>
-                          {intro.message && (
-                            <div className="bg-white rounded-lg p-3 border border-[#1da6e0]/20">
-                              <p className="text-xs text-[#1da6e0] mb-1">
-                                Message from{" "}
-                                {intro.introducedBy}:
-                              </p>
-                              <p className="text-sm text-gray-600 italic">
-                                "{intro.message}"
-                              </p>
-                            </div>
-                          )}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <div className="flex gap-3">
-                    <Button
-                      onClick={() =>
-                        handleReject(intro.id, intro.name)
-                      }
-                      className="flex-1 bg-[#FEF2F2] text-[#EF4444] hover:bg-[#EF4444] hover:text-white rounded-full py-6 border-0 shadow-sm"
-                    >
-                      <X size={18} className="mr-2" />
-                      Decline
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        handleAccept(intro.id, intro.name)
-                      }
-                      className="flex-1 bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full py-6 border-0 shadow-sm"
-                    >
-                      <Check size={18} className="mr-2" />
-                      Match
-                    </Button>
-                  </div>
-                </motion.div>
-              ))
-            )}
-          </TabsContent>
-
-          <TabsContent value="accepted" className="space-y-4">
-            {acceptedIntros.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] rounded-full flex items-center justify-center mx-auto mb-4 opacity-20">
-                  <Check size={32} className="text-white" />
-                </div>
-                <p className="text-gray-500">
-                  No dating connections yet
-                </p>
-                <p className="text-sm text-gray-400 mt-1">
-                  Accept an introduction to get started!
-                </p>
-              </div>
-            ) : (
-              acceptedIntros.map((intro, index) => (
-                <motion.div
-                  key={intro.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer border-2 border-[#1da6e0]/10"
-                >
-                  <div className="flex items-center gap-4">
-                    <Avatar className="w-16 h-16 border-2 border-[#1da6e0]/30">
-                      {intro.avatar && (
-                        <AvatarImage
-                          src={intro.avatar}
-                          alt={intro.name}
-                        />
-                      )}
-                      <AvatarFallback className="bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] text-white">
-                        {intro.fallback}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div
-                      className="flex-1"
-                      onClick={() => onNavigate("chats")}
-                    >
-                      <div className="flex items-center gap-2 mb-1">
-                        <span>{intro.name}</span>
-                        <span className="text-gray-500">
-                          {intro.age}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-500 mb-1">
-                        Introduced by{" "}
-                        <span className="text-[#1da6e0]">
-                          {intro.introducedBy}
-                        </span>
-                      </p>
-                      <p className="text-xs text-[#1da6e0]">
-                        {intro.date}
-                      </p>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <Button
-                        onClick={() => onNavigate("chats")}
-                        className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full border-0 shadow-sm px-6"
-                      >
-                        Chat
-                      </Button>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full px-4"
-                          >
-                            <Trash2 size={14} />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent className="rounded-3xl">
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Remove Dating Connection?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to remove{" "}
-                              {intro.name} from your dating
-                              connections? This action cannot be
-                              undone.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel className="rounded-full">
-                              Cancel
-                            </AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() =>
-                                handleRemoveDatingConnection(
-                                  intro.id,
-                                  intro.name,
-                                )
-                              }
-                              className="bg-red-500 hover:bg-red-600 rounded-full"
+                        <p className="text-sm text-gray-500 mb-2">
+                          Introduced by{" "}
+                          <span className="text-[#1da6e0]">
+                            {intro.introducedBy}
+                          </span>
+                        </p>
+                        <div className="flex gap-2 flex-wrap">
+                          {intro.interests.map((interest) => (
+                            <span
+                              key={interest}
+                              className="px-3 py-1 bg-[#E3F5FF] text-[#1da6e0] rounded-full text-xs"
                             >
-                              Remove
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
+                              {interest}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() =>
+                          setExpandedIntro(
+                            expandedIntro === intro.id
+                              ? null
+                              : intro.id,
+                          )
+                        }
+                        className="text-gray-400 hover:text-[#1da6e0] transition-colors"
+                      >
+                        {expandedIntro === intro.id ? (
+                          <ChevronUp size={20} />
+                        ) : (
+                          <ChevronDown size={20} />
+                        )}
+                      </button>
                     </div>
+
+                    <AnimatePresence>
+                      {expandedIntro === intro.id && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mb-4 overflow-hidden"
+                        >
+                          <div className="bg-[#E3F5FF]/30 rounded-xl p-4">
+                            <p className="text-sm text-gray-700 mb-3">
+                              {intro.bio}
+                            </p>
+                            {intro.message && (
+                              <div className="bg-white rounded-lg p-3 border border-[#1da6e0]/20">
+                                <p className="text-xs text-[#1da6e0] mb-1">
+                                  Message from{" "}
+                                  {intro.introducedBy}:
+                                </p>
+                                <p className="text-sm text-gray-600 italic">
+                                  "{intro.message}"
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <div className="flex gap-3">
+                      <Button
+                        onClick={() =>
+                          handleReject(intro.id, intro.name)
+                        }
+                        className="flex-1 bg-[#FEF2F2] text-[#EF4444] hover:bg-[#EF4444] hover:text-white rounded-full py-6 border-0 shadow-sm"
+                      >
+                        <X size={18} className="mr-2" />
+                        Decline
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          handleAccept(intro.id, intro.name)
+                        }
+                        className="flex-1 bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full py-6 border-0 shadow-sm"
+                      >
+                        <Check size={18} className="mr-2" />
+                        Match
+                      </Button>
+                    </div>
+                  </motion.div>
+                ))
+              )}
+            </TabsContent>
+
+            <TabsContent value="accepted" className="space-y-4">
+              {acceptedIntros.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] rounded-full flex items-center justify-center mx-auto mb-4 opacity-20">
+                    <Check size={32} className="text-white" />
                   </div>
-                </motion.div>
-              ))
-            )}
-          </TabsContent>
-        </Tabs>
+                  <p className="text-gray-500">
+                    No dating connections yet
+                  </p>
+                  <p className="text-sm text-gray-400 mt-1">
+                    Accept an introduction to get started!
+                  </p>
+                </div>
+              ) : (
+                acceptedIntros.map((intro, index) => (
+                  <motion.div
+                    key={intro.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer border-2 border-[#1da6e0]/10"
+                  >
+                    <div className="flex items-center gap-4">
+                      <Avatar className="w-16 h-16 border-2 border-[#1da6e0]/30">
+                        {intro.avatar && (
+                          <AvatarImage
+                            src={intro.avatar}
+                            alt={intro.name}
+                          />
+                        )}
+                        <AvatarFallback className="bg-gradient-to-br from-[#1da6e0] to-[#5cc2f0] text-white">
+                          {intro.fallback}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div
+                        className="flex-1"
+                        onClick={() => onNavigate("chats")}
+                      >
+                        <div className="flex items-center gap-2 mb-1">
+                          <span>{intro.name}</span>
+                          <span className="text-gray-500">
+                            {intro.age}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-500 mb-1">
+                          Introduced by{" "}
+                          <span className="text-[#1da6e0]">
+                            {intro.introducedBy}
+                          </span>
+                        </p>
+                        <p className="text-xs text-[#1da6e0]">
+                          {intro.date}
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <Button
+                          onClick={() => onNavigate("chats")}
+                          className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full border-0 shadow-sm px-6"
+                        >
+                          Chat
+                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full px-4"
+                            >
+                              <Trash2 size={14} />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="rounded-3xl">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Remove Dating Connection?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to remove{" "}
+                                {intro.name} from your dating
+                                connections? This action cannot be
+                                undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="rounded-full">
+                                Cancel
+                              </AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() =>
+                                  handleRemoveDatingConnection(
+                                    intro.id,
+                                    intro.name,
+                                  )
+                                }
+                                className="bg-red-500 hover:bg-red-600 rounded-full"
+                              >
+                                Remove
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
 

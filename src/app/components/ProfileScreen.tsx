@@ -169,8 +169,8 @@ export function ProfileScreen({
 
   const stats = [
     { label: "Circle", value: "24" },
-    { label: "Intros Made", value: "42" },
-    { label: "Dating", value: "5" },
+    { label: "Given", value: "42" },
+    { label: "Matches", value: "5" },
   ];
 
   const handleMenuClick = (action?: string) => {

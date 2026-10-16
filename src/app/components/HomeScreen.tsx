@@ -29,7 +29,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
     },
     {
       icon: Heart,
-      label: "Intros",
+      label: "Received",
       value: 5,
       color: "#ff9883",
       screen: "introductions",
@@ -190,11 +190,10 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                       alt={activity.name}
                     />
                     <AvatarFallback
-                      className={`${
-                        activity.type === "introduction"
-                          ? "bg-gradient-to-br from-[#ff9883] to-[#ffb8a8] text-white"
-                          : "bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white"
-                      }`}
+                      className={`${activity.type === "introduction"
+                        ? "bg-gradient-to-br from-[#ff9883] to-[#ffb8a8] text-white"
+                        : "bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white"
+                        }`}
                     >
                       {activity.fallback}
                     </AvatarFallback>
@@ -216,11 +215,10 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                         {activity.tags.map((tag) => (
                           <span
                             key={tag}
-                            className={`px-3 py-1 rounded-full text-xs ${
-                              activity.type === "introduction"
-                                ? "bg-[#FFF0ED] text-[#ff9883]"
-                                : "bg-[#F0F9ED] text-[#77d75b]"
-                            }`}
+                            className={`px-3 py-1 rounded-full text-xs ${activity.type === "introduction"
+                              ? "bg-[#FFF0ED] text-[#ff9883]"
+                              : "bg-[#F0F9ED] text-[#77d75b]"
+                              }`}
                           >
                             {tag}
                           </span>

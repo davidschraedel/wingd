@@ -21,7 +21,7 @@ export function ChatsScreen({ onNavigate }: ChatsScreenProps) {
     {
       id: 1,
       name: "Jessica Barnes",
-      lastMessage: "Haha that's great!",
+      lastMessage: "That's great!",
       time: "New",
       unread: true,
       avatar: "/avatars/sarah.jpg",
@@ -33,7 +33,7 @@ export function ChatsScreen({ onNavigate }: ChatsScreenProps) {
       id: 2,
       name: "Harry Owens",
       lastMessage:
-        "Next week I have a trip planned. I'm so excited!!!",
+        "Next week I have a trip planned. I'm so excited 🥲",
       time: "2h",
       unread: false,
       avatar: "/avatars/mike.jpg",
