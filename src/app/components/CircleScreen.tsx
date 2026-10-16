@@ -3,7 +3,6 @@ import {
   Search,
   UserPlus,
   User,
-  UserMinus,
   Trash2,
   Mail,
   Clock,
@@ -271,7 +270,7 @@ export function CircleScreen({
         setSelectedProfile(person);
       }
     }
-  }, [location.state, connections]);
+  }, [location.state]);
 
   const toggleSelectToRemove = (id: number) => {
     setSelectedToRemove((prev) => {
@@ -653,23 +652,23 @@ export function CircleScreen({
               )}
             </TabsContent>
 
-            {/* Pending Invites Tab */}
+            {/* Intros Given Tab */}
             <TabsContent value="invites" className="space-y-4">
-              {pendingInvitations.length === 0 ? (
+              {pendingInvitations.length === 0 && matchedInvitations.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#77d75b] to-[#a0e88b] rounded-full flex items-center justify-center mx-auto mb-4 opacity-20">
                     <Mail size={32} className="text-white" />
                   </div>
                   <p className="text-gray-500">
-                    No pending invitations
+                    No introductions given yet
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
-                    Invite people to join Wingd and make
-                    introductions!
+                    Connect two people in your circle or invite friends to join!
                   </p>
                 </div>
               ) : (
-                pendingInvitations.map((invitation, index) => (
+                <>
+                  {pendingInvitations.map((invitation, index) => (
                   <motion.div
                     key={invitation.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -860,8 +859,7 @@ export function CircleScreen({
                       </AlertDialog>
                     </div>
                   </motion.div>
-                ))
-              )}
+                ))}
 
               {/* Matched Introduction Entry */}
               {matchedInvitations.map((match, index) => (
@@ -953,7 +951,9 @@ export function CircleScreen({
                   </div>
                 </motion.div>
               ))}
-            </TabsContent>
+            </>
+          )}
+        </TabsContent>
           </Tabs>
         </div>
       </div>

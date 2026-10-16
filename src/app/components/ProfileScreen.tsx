@@ -12,7 +12,6 @@ import {
   Shield,
   Sliders,
   RotateCcw,
-  Sparkles,
   Info,
   Check,
 } from "lucide-react";
@@ -25,7 +24,6 @@ import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { Slider } from "./ui/slider";
 import {
   Dialog,
   DialogContent,
@@ -74,10 +72,7 @@ export function ProfileScreen({
 
   // Account Settings Form State
   const [ghostMode, setGhostMode] = useState(false);
-  const [showMutual, setShowMutual] = useState(true);
   const [readReceipts, setReadReceipts] = useState(true);
-  const [wingmanMode, setWingmanMode] = useState(true);
-  const [discoveryRadius, setDiscoveryRadius] = useState([25]);
 
   const suggestedTags = ["Coffee", "Fitness", "Design", "Music", "Foodie", "Biking"];
 
@@ -602,10 +597,7 @@ export function ProfileScreen({
                   onClick={() => {
                     setNotificationsEnabled(true);
                     setGhostMode(false);
-                    setShowMutual(true);
                     setReadReceipts(true);
-                    setWingmanMode(true);
-                    setDiscoveryRadius([25]);
                     toast.success("Settings reset to prototype defaults");
                   }}
                   className="w-1/2 rounded-xl text-xs border-gray-200"
@@ -687,10 +679,8 @@ export function ProfileScreen({
                 </AccordionContent>
               </AccordionItem>
 
-
-
               <AccordionItem
-                value="item-4"
+                value="item-3"
                 className="border border-gray-100 rounded-xl px-3 bg-gray-50/70"
               >
                 <AccordionTrigger className="text-xs font-semibold text-gray-800 hover:no-underline py-3">

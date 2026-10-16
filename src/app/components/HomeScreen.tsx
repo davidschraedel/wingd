@@ -57,7 +57,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       fallback: "SJ",
       screen: "introductions",
       navData: { tab: "pending" },
-      actionLabel: "Review intro",
     },
     {
       id: 2,
@@ -71,7 +70,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       fallback: "MC",
       screen: "circle",
       navData: { tab: "invites" },
-      actionLabel: "View intro",
     },
     {
       id: 3,
@@ -85,7 +83,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       fallback: "ER",
       screen: "circle",
       navData: { tab: "circle", personId: 3 },
-      actionLabel: "View in circle",
     },
   ];
 
@@ -262,7 +259,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                         {activity.time}
                       </span>
                       <div className="flex items-center gap-1 text-xs font-medium text-gray-400 group-hover:text-[#1da6e0] transition-colors mt-2">
-                        <span className="hidden sm:inline">{activity.actionLabel}</span>
                         <ChevronRight
                           size={15}
                           className="group-hover:translate-x-1 transition-transform"

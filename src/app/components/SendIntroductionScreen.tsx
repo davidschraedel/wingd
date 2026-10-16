@@ -533,7 +533,7 @@ export function SendIntroductionScreen({
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <button
-              onClick={() => onNavigate("home")}
+              onClick={() => onNavigate("back")}
               className="text-white hover:scale-110 transition-transform"
             >
               <ArrowLeft size={24} />
