@@ -56,7 +56,7 @@ export function ProfileScreen({
   const [profile, setProfile] = useState({
     name: "Sam Doe",
     email: "sam.doe@email.com",
-    bio: "Wingman enthusiast & outdoor adventurer. Always looking to connect good people!",
+    bio: "Outdoor adventurer and pastry chef. Always open to new friends!",
     interests: ["Hiking", "Photography", "Travel"],
   });
 
