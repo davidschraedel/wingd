@@ -127,6 +127,40 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Interactive pointer cursor defaults for modern web reset */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]):not([disabled]),
+  [role="tab"]:not([aria-disabled="true"]):not([disabled]),
+  [role="menuitem"]:not([aria-disabled="true"]):not([disabled]),
+  [role="switch"]:not([aria-disabled="true"]):not([disabled]),
+  [role="checkbox"]:not([aria-disabled="true"]):not([disabled]),
+  [role="radio"]:not([aria-disabled="true"]):not([disabled]),
+  [role="option"]:not([aria-disabled="true"]):not([disabled]),
+  [type="button"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  summary,
+  select:not(:disabled),
+  a:not([aria-disabled="true"]):not([disabled]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [role="button"][aria-disabled="true"],
+  [role="button"]:disabled,
+  [role="tab"][aria-disabled="true"],
+  [role="tab"]:disabled,
+  [role="switch"][aria-disabled="true"],
+  [role="switch"]:disabled,
+  [role="checkbox"][aria-disabled="true"],
+  [role="checkbox"]:disabled,
+  [type="button"]:disabled,
+  [type="reset"]:disabled,
+  [type="submit"]:disabled,
+  select:disabled {
+    cursor: not-allowed;
+  }
 }
 
 /**

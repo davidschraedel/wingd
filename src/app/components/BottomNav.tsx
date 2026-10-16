@@ -24,7 +24,7 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className="flex flex-col items-center justify-center gap-1 py-1 transition-colors bg-[rgba(0,0,0,0)]"
+              className="flex flex-col items-center justify-center gap-1 py-1 transition-colors bg-[rgba(0,0,0,0)] cursor-pointer"
             >
               <Icon
                 size={20}

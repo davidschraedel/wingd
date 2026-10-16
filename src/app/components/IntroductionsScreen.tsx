@@ -343,7 +343,10 @@ export function IntroductionsScreen({
                     className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer border-2 border-[#1da6e0]/10"
                   >
                     <div className="flex items-center gap-4">
-                      <Avatar className="w-16 h-16 border-2 border-[#1da6e0]/30">
+                      <Avatar
+                        className="w-16 h-16 border-2 border-[#1da6e0]/30 cursor-pointer"
+                        onClick={() => onNavigate("chats")}
+                      >
                         {intro.avatar && (
                           <AvatarImage
                             src={intro.avatar}
@@ -355,7 +358,7 @@ export function IntroductionsScreen({
                         </AvatarFallback>
                       </Avatar>
                       <div
-                        className="flex-1"
+                        className="flex-1 cursor-pointer"
                         onClick={() => onNavigate("chats")}
                       >
                         <div className="flex items-center gap-2 mb-1">

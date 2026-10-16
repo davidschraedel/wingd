@@ -3,7 +3,6 @@ import {
   Search,
   UserPlus,
   User,
-  UserMinus,
   Trash2,
   Mail,
   Clock,
@@ -271,7 +270,7 @@ export function CircleScreen({
         setSelectedProfile(person);
       }
     }
-  }, [location.state, connections]);
+  }, [location.state]);
 
   const toggleSelectToRemove = (id: number) => {
     setSelectedToRemove((prev) => {
@@ -447,7 +446,7 @@ export function CircleScreen({
                     {selectedToRemove.size > 0 && (
                       <button
                         onClick={() => setSelectedToRemove(new Set())}
-                        className="font-medium text-amber-900 underline hover:text-amber-700 ml-2 whitespace-nowrap"
+                        className="font-medium text-amber-900 underline hover:text-amber-700 ml-2 whitespace-nowrap cursor-pointer"
                       >
                         Deselect all
                       </button>
@@ -476,28 +475,35 @@ export function CircleScreen({
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.05 }}
+                          role="button"
+                          tabIndex={0}
                           onClick={() => {
                             if (isManageMode) {
                               toggleSelectToRemove(connection.id);
+                            } else {
+                              setSelectedProfile(connection);
                             }
                           }}
-                          className={`bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all ${isManageMode
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              if (isManageMode) {
+                                toggleSelectToRemove(connection.id);
+                              } else {
+                                setSelectedProfile(connection);
+                              }
+                            }
+                          }}
+                          className={`group bg-white rounded-2xl p-4 transition-all cursor-pointer select-none active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#77d75b]/40 ${isManageMode
                             ? isSelected
-                              ? "border-2 border-red-300 bg-red-50/20 cursor-pointer"
-                              : "border-2 border-transparent hover:border-gray-200 cursor-pointer"
-                            : "border-2 border-transparent"
+                              ? "border-2 border-red-300 bg-red-50/20 shadow-sm"
+                              : "border-2 border-transparent hover:border-gray-200 shadow-sm hover:shadow-md"
+                            : "border border-gray-100 hover:border-[#77d75b]/30 shadow-sm hover:shadow-md"
                             }`}
                         >
                           <div className="flex items-center gap-3">
                             <Avatar
-                              onClick={(e) => {
-                                if (!isManageMode) {
-                                  e.stopPropagation();
-                                  setSelectedProfile(connection);
-                                }
-                              }}
-                              className={`w-14 h-14 border-2 border-[#77d75b]/20 flex-shrink-0 ${!isManageMode ? "cursor-pointer hover:scale-105 transition-transform" : ""
-                                }`}
+                              className="w-14 h-14 border-2 border-[#77d75b]/20 flex-shrink-0"
                             >
                               {connection.avatar && (
                                 <AvatarImage
@@ -512,14 +518,7 @@ export function CircleScreen({
                             <div className="flex-1 min-w-0">
                               <div className="mb-1">
                                 <span
-                                  onClick={(e) => {
-                                    if (!isManageMode) {
-                                      e.stopPropagation();
-                                      setSelectedProfile(connection);
-                                    }
-                                  }}
-                                  className={`inline-block font-semibold text-gray-900 truncate max-w-full ${!isManageMode ? "cursor-pointer hover:text-[#5cb844] transition-colors" : ""
-                                    }`}
+                                  className="inline-block font-semibold text-gray-900 truncate max-w-full group-hover:text-[#5cb844] transition-colors"
                                 >
                                   {connection.name}
                                 </span>
@@ -583,12 +582,20 @@ export function CircleScreen({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setSelectedProfile(connection)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            setSelectedProfile(connection);
+                          }
+                        }}
+                        className="group bg-white rounded-2xl p-4 border border-gray-100 hover:border-[#77d75b]/30 shadow-sm hover:shadow-md transition-all cursor-pointer select-none active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#77d75b]/40"
                       >
                         <div className="flex items-center gap-3">
                           <Avatar
-                            onClick={() => setSelectedProfile(connection)}
-                            className="w-14 h-14 border-2 border-[#77d75b]/20 cursor-pointer hover:scale-105 transition-transform flex-shrink-0"
+                            className="w-14 h-14 border-2 border-[#77d75b]/20 flex-shrink-0"
                           >
                             {connection.avatar && (
                               <AvatarImage
@@ -603,8 +610,7 @@ export function CircleScreen({
                           <div className="flex-1 min-w-0">
                             <div className="mb-1">
                               <span
-                                onClick={() => setSelectedProfile(connection)}
-                                className="inline-block font-semibold text-gray-900 truncate max-w-full cursor-pointer hover:text-[#5cb844] transition-colors"
+                                className="inline-block font-semibold text-gray-900 truncate max-w-full group-hover:text-[#5cb844] transition-colors"
                               >
                                 {connection.name}
                               </span>
@@ -630,12 +636,13 @@ export function CircleScreen({
                             </Button>
                           ) : (
                             <Button
-                              onClick={() =>
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 handleAddToCircle(
                                   connection.id,
                                   connection.name,
-                                )
-                              }
+                                );
+                              }}
                               className="bg-[#F0F9ED] text-[#77d75b] hover:bg-[#77d75b] hover:text-white rounded-full px-6 border-0 shadow-sm flex-shrink-0"
                             >
                               <UserPlus
@@ -653,306 +660,307 @@ export function CircleScreen({
               )}
             </TabsContent>
 
-            {/* Pending Invites Tab */}
+            {/* Intros Given Tab */}
             <TabsContent value="invites" className="space-y-4">
-              {pendingInvitations.length === 0 ? (
+              {pendingInvitations.length === 0 && matchedInvitations.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#77d75b] to-[#a0e88b] rounded-full flex items-center justify-center mx-auto mb-4 opacity-20">
                     <Mail size={32} className="text-white" />
                   </div>
                   <p className="text-gray-500">
-                    No pending invitations
+                    No introductions given yet
                   </p>
                   <p className="text-sm text-gray-400 mt-1">
-                    Invite people to join Wingd and make
-                    introductions!
+                    Connect two people in your circle or invite friends to join!
                   </p>
                 </div>
               ) : (
-                pendingInvitations.map((invitation, index) => (
-                  <motion.div
-                    key={invitation.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-white rounded-2xl p-5 shadow-sm border-2 border-[#77d75b]/20"
-                  >
-                    <div className="mb-4">
-                      {invitation.waitingFor.length > 0 ? (
-                        <div className="flex items-center gap-2 mb-3">
-                          <Clock
-                            size={16}
-                            className="text-[#77d75b]"
-                          />
-                          <p className="text-xs text-[#77d75b]">
-                            Waiting for{" "}
-                            {invitation.waitingFor.join(" and ")}{" "}
-                            to join
-                          </p>
+                <>
+                  {pendingInvitations.map((invitation, index) => (
+                    <motion.div
+                      key={invitation.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-white rounded-2xl p-5 shadow-sm border-2 border-[#77d75b]/20"
+                    >
+                      <div className="mb-4">
+                        {invitation.waitingFor.length > 0 ? (
+                          <div className="flex items-center gap-2 mb-3">
+                            <Clock
+                              size={16}
+                              className="text-[#77d75b]"
+                            />
+                            <p className="text-xs text-[#77d75b]">
+                              Waiting for{" "}
+                              {invitation.waitingFor.join(" and ")}{" "}
+                              to join
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2 mb-3">
+                            <Clock
+                              size={16}
+                              className="text-[#1da6e0]"
+                            />
+                            <p className="text-xs text-[#1da6e0]">
+                              Introduction sent - both users
+                              notified
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Two people being introduced */}
+                        <div className="space-y-3">
+                          {/* Person 1 */}
+                          <div className="flex items-center gap-3 p-3 bg-[#F0F9ED] rounded-xl">
+                            {invitation.person1.isUser ? (
+                              <Avatar className="w-12 h-12 border-2 border-[#77d75b]/30">
+                                {invitation.person1.avatar && (
+                                  <AvatarImage
+                                    src={invitation.person1.avatar}
+                                    alt={invitation.person1.name}
+                                  />
+                                )}
+                                <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white">
+                                  {invitation.person1.fallback}
+                                </AvatarFallback>
+                              </Avatar>
+                            ) : (
+                              <div className="w-12 h-12 bg-gradient-to-br from-[#77d75b] to-[#a0e88b] rounded-full flex items-center justify-center">
+                                <Mail
+                                  className="text-white"
+                                  size={20}
+                                />
+                              </div>
+                            )}
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm">
+                                  {invitation.person1.name}
+                                </span>
+                                {invitation.person1.isUser ? (
+                                  <span className="px-2 py-0.5 bg-[#77d75b]/30 text-[#77d75b] rounded-full text-xs">
+                                    In your Circle
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 bg-[#77d75b]/20 text-[#77d75b] rounded-full text-xs">
+                                    Invited
+                                  </span>
+                                )}
+                              </div>
+                              {invitation.person1.email && (
+                                <p className="text-xs text-gray-500">
+                                  {invitation.person1.email}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Connector */}
+                          <div className="flex justify-center">
+                            <div className="w-px h-6 bg-gradient-to-b from-[#77d75b] to-transparent" />
+                          </div>
+
+                          {/* Person 2 */}
+                          <div className="flex items-center gap-3 p-3 bg-[#F0F9ED] rounded-xl">
+                            {invitation.person2.isUser ? (
+                              <Avatar className="w-12 h-12 border-2 border-[#77d75b]/30">
+                                {invitation.person2.avatar && (
+                                  <AvatarImage
+                                    src={invitation.person2.avatar}
+                                    alt={invitation.person2.name}
+                                  />
+                                )}
+                                <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white">
+                                  {invitation.person2.fallback}
+                                </AvatarFallback>
+                              </Avatar>
+                            ) : (
+                              <div className="w-12 h-12 bg-gradient-to-br from-[#77d75b] to-[#a0e88b] rounded-full flex items-center justify-center">
+                                <Mail
+                                  className="text-white"
+                                  size={20}
+                                />
+                              </div>
+                            )}
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm">
+                                  {invitation.person2.name}
+                                </span>
+                                {invitation.person2.isUser ? (
+                                  <span className="px-2 py-0.5 bg-[#77d75b]/30 text-[#77d75b] rounded-full text-xs">
+                                    In your Circle
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 bg-[#77d75b]/20 text-[#77d75b] rounded-full text-xs">
+                                    Invited
+                                  </span>
+                                )}
+                              </div>
+                              {invitation.person2.email && (
+                                <p className="text-xs text-gray-500">
+                                  {invitation.person2.email}
+                                </p>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      ) : (
-                        <div className="flex items-center gap-2 mb-3">
-                          <Clock
-                            size={16}
-                            className="text-[#1da6e0]"
-                          />
-                          <p className="text-xs text-[#1da6e0]">
-                            Introduction sent - both users
-                            notified
+                      </div>
+
+                      {/* Message */}
+                      {invitation.message && (
+                        <div className="bg-[#E3F5FF]/30 rounded-xl p-3 mb-4">
+                          <p className="text-xs text-[#1da6e0] mb-1">
+                            Your message:
+                          </p>
+                          <p className="text-sm text-gray-600 italic">
+                            "{invitation.message}"
                           </p>
                         </div>
                       )}
 
-                      {/* Two people being introduced */}
-                      <div className="space-y-3">
-                        {/* Person 1 */}
-                        <div className="flex items-center gap-3 p-3 bg-[#F0F9ED] rounded-xl">
-                          {invitation.person1.isUser ? (
-                            <Avatar className="w-12 h-12 border-2 border-[#77d75b]/30">
-                              {invitation.person1.avatar && (
-                                <AvatarImage
-                                  src={invitation.person1.avatar}
-                                  alt={invitation.person1.name}
-                                />
-                              )}
-                              <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white">
-                                {invitation.person1.fallback}
-                              </AvatarFallback>
-                            </Avatar>
-                          ) : (
-                            <div className="w-12 h-12 bg-gradient-to-br from-[#77d75b] to-[#a0e88b] rounded-full flex items-center justify-center">
-                              <Mail
-                                className="text-white"
-                                size={20}
-                              />
-                            </div>
-                          )}
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm">
-                                {invitation.person1.name}
-                              </span>
-                              {invitation.person1.isUser ? (
-                                <span className="px-2 py-0.5 bg-[#77d75b]/30 text-[#77d75b] rounded-full text-xs">
-                                  In your Circle
-                                </span>
-                              ) : (
-                                <span className="px-2 py-0.5 bg-[#77d75b]/20 text-[#77d75b] rounded-full text-xs">
-                                  Invited
-                                </span>
-                              )}
-                            </div>
-                            {invitation.person1.email && (
-                              <p className="text-xs text-gray-500">
-                                {invitation.person1.email}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Connector */}
-                        <div className="flex justify-center">
-                          <div className="w-px h-6 bg-gradient-to-b from-[#77d75b] to-transparent" />
-                        </div>
-
-                        {/* Person 2 */}
-                        <div className="flex items-center gap-3 p-3 bg-[#F0F9ED] rounded-xl">
-                          {invitation.person2.isUser ? (
-                            <Avatar className="w-12 h-12 border-2 border-[#77d75b]/30">
-                              {invitation.person2.avatar && (
-                                <AvatarImage
-                                  src={invitation.person2.avatar}
-                                  alt={invitation.person2.name}
-                                />
-                              )}
-                              <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white">
-                                {invitation.person2.fallback}
-                              </AvatarFallback>
-                            </Avatar>
-                          ) : (
-                            <div className="w-12 h-12 bg-gradient-to-br from-[#77d75b] to-[#a0e88b] rounded-full flex items-center justify-center">
-                              <Mail
-                                className="text-white"
-                                size={20}
-                              />
-                            </div>
-                          )}
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm">
-                                {invitation.person2.name}
-                              </span>
-                              {invitation.person2.isUser ? (
-                                <span className="px-2 py-0.5 bg-[#77d75b]/30 text-[#77d75b] rounded-full text-xs">
-                                  In your Circle
-                                </span>
-                              ) : (
-                                <span className="px-2 py-0.5 bg-[#77d75b]/20 text-[#77d75b] rounded-full text-xs">
-                                  Invited
-                                </span>
-                              )}
-                            </div>
-                            {invitation.person2.email && (
-                              <p className="text-xs text-gray-500">
-                                {invitation.person2.email}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Message */}
-                    {invitation.message && (
-                      <div className="bg-[#E3F5FF]/30 rounded-xl p-3 mb-4">
-                        <p className="text-xs text-[#1da6e0] mb-1">
-                          Your message:
+                      {/* Footer */}
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-gray-400">
+                          Created {invitation.createdAt}
                         </p>
-                        <p className="text-sm text-gray-600 italic">
-                          "{invitation.message}"
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Footer */}
-                    <div className="flex items-center justify-between">
-                      <p className="text-xs text-gray-400">
-                        Created {invitation.createdAt}
-                      </p>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full"
-                          >
-                            <Trash2 size={14} className="mr-1" />
-                            Cancel
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent className="rounded-3xl">
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Cancel Invitation?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Are you sure you want to cancel this
-                              introduction invitation? The invited
-                              person won't be notified.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel className="rounded-full">
-                              Keep It
-                            </AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() =>
-                                handleCancelInvitation(
-                                  invitation.id,
-                                )
-                              }
-                              className="bg-red-500 hover:bg-red-600 rounded-full"
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full"
                             >
-                              Cancel Invitation
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
-                  </motion.div>
-                ))
-              )}
-
-              {/* Matched Introduction Entry */}
-              {matchedInvitations.map((match, index) => (
-                <motion.div
-                  key={match.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: (pendingInvitations.length + index) * 0.1,
-                  }}
-                  className="bg-white rounded-2xl p-5 sm:py-6 sm:px-8 shadow-sm border border-gray-100 hover:shadow-md transition-all"
-                >
-                  <div className="flex items-center justify-between gap-3 sm:gap-6">
-                    {/* Person 1: Avatar & Name */}
-                    <div
-                      className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 min-w-0 cursor-pointer group shrink-0"
-                      onClick={() => {
-                        const person = connections.find(
-                          (c) => c.id === match.person1.id,
-                        );
-                        if (person) setSelectedProfile(person);
-                      }}
-                    >
-                      <Avatar className="w-12 h-12 sm:w-13 sm:h-13 border border-gray-200 shrink-0 group-hover:scale-105 transition-transform shadow-xs">
-                        {match.person1.avatar && (
-                          <AvatarImage
-                            src={match.person1.avatar}
-                            alt={match.person1.name}
-                          />
-                        )}
-                        <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white font-medium text-xs sm:text-sm">
-                          {match.person1.fallback}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="min-w-0 text-center sm:text-left">
-                        <span className="font-semibold text-gray-900 text-xs sm:text-sm truncate block max-w-[90px] sm:max-w-none group-hover:text-[#5cb844] transition-colors">
-                          {match.person1.name}
-                        </span>
+                              <Trash2 size={14} className="mr-1" />
+                              Cancel
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="rounded-3xl">
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Cancel Invitation?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Are you sure you want to cancel this
+                                introduction invitation? The invited
+                                person won't be notified.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel className="rounded-full">
+                                Keep It
+                              </AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() =>
+                                  handleCancelInvitation(
+                                    invitation.id,
+                                  )
+                                }
+                                className="bg-red-500 hover:bg-red-600 rounded-full"
+                              >
+                                Cancel Invitation
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                       </div>
-                    </div>
+                    </motion.div>
+                  ))}
 
-                    {/* Center Connector Bridge */}
-                    <div className="flex-1 flex items-center justify-center min-w-0 px-2 sm:px-6">
-                      {/* Left line */}
-                      <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#a0e88b] to-[#77d75b] min-w-4 sm:min-w-8" />
-
-                      {/* Center Status Pill & Date */}
-                      <div className="flex flex-col items-center justify-center px-2.5 sm:px-4 shrink-0">
-                        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0F9ED] border border-[#77d75b]/30 text-[#5cb844] text-xs font-semibold whitespace-nowrap shadow-xs">
-                          <Check size={13} strokeWidth={2.5} />
-                          <span>Connected</span>
+                  {/* Matched Introduction Entry */}
+                  {matchedInvitations.map((match, index) => (
+                    <motion.div
+                      key={match.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        delay: (pendingInvitations.length + index) * 0.1,
+                      }}
+                      className="bg-white rounded-2xl p-5 sm:py-6 sm:px-8 shadow-sm border border-gray-100 hover:shadow-md transition-all"
+                    >
+                      <div className="flex items-center justify-between gap-3 sm:gap-6">
+                        {/* Person 1: Avatar & Name */}
+                        <div
+                          className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 min-w-0 cursor-pointer group shrink-0"
+                          onClick={() => {
+                            const person = connections.find(
+                              (c) => c.id === match.person1.id,
+                            );
+                            if (person) setSelectedProfile(person);
+                          }}
+                        >
+                          <Avatar className="w-12 h-12 sm:w-13 sm:h-13 border border-gray-200 shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+                            {match.person1.avatar && (
+                              <AvatarImage
+                                src={match.person1.avatar}
+                                alt={match.person1.name}
+                              />
+                            )}
+                            <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white font-medium text-xs sm:text-sm">
+                              {match.person1.fallback}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="min-w-0 text-center sm:text-left">
+                            <span className="font-semibold text-gray-900 text-xs sm:text-sm truncate block max-w-[90px] sm:max-w-none group-hover:text-[#5cb844] transition-colors">
+                              {match.person1.name}
+                            </span>
+                          </div>
                         </div>
-                        <span className="text-[11px] text-gray-400 mt-1.5 font-normal tracking-wide">
-                          {match.createdAt}
-                        </span>
-                      </div>
 
-                      {/* Right line */}
-                      <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#a0e88b] to-[#77d75b] min-w-4 sm:min-w-8" />
-                    </div>
+                        {/* Center Connector Bridge */}
+                        <div className="flex-1 flex items-center justify-center min-w-0 px-2 sm:px-6">
+                          {/* Left line */}
+                          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#a0e88b] to-[#77d75b] min-w-4 sm:min-w-8" />
 
-                    {/* Person 2: Avatar & Name */}
-                    <div
-                      className="flex flex-col-reverse sm:flex-row items-center gap-2 sm:gap-3 min-w-0 cursor-pointer group shrink-0 justify-end"
-                      onClick={() => {
-                        const person = connections.find(
-                          (c) => c.id === match.person2.id,
-                        );
-                        if (person) setSelectedProfile(person);
-                      }}
-                    >
-                      <div className="min-w-0 text-center sm:text-right">
-                        <span className="font-semibold text-gray-900 text-xs sm:text-sm truncate block max-w-[90px] sm:max-w-none group-hover:text-[#5cb844] transition-colors">
-                          {match.person2.name}
-                        </span>
+                          {/* Center Status Pill & Date */}
+                          <div className="flex flex-col items-center justify-center px-2.5 sm:px-4 shrink-0">
+                            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0F9ED] border border-[#77d75b]/30 text-[#5cb844] text-xs font-semibold whitespace-nowrap shadow-xs">
+                              <Check size={13} strokeWidth={2.5} />
+                              <span>Connected</span>
+                            </div>
+                            <span className="text-[11px] text-gray-400 mt-1.5 font-normal tracking-wide">
+                              {match.createdAt}
+                            </span>
+                          </div>
+
+                          {/* Right line */}
+                          <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#a0e88b] to-[#77d75b] min-w-4 sm:min-w-8" />
+                        </div>
+
+                        {/* Person 2: Avatar & Name */}
+                        <div
+                          className="flex flex-col-reverse sm:flex-row items-center gap-2 sm:gap-3 min-w-0 cursor-pointer group shrink-0 justify-end"
+                          onClick={() => {
+                            const person = connections.find(
+                              (c) => c.id === match.person2.id,
+                            );
+                            if (person) setSelectedProfile(person);
+                          }}
+                        >
+                          <div className="min-w-0 text-center sm:text-right">
+                            <span className="font-semibold text-gray-900 text-xs sm:text-sm truncate block max-w-[90px] sm:max-w-none group-hover:text-[#5cb844] transition-colors">
+                              {match.person2.name}
+                            </span>
+                          </div>
+                          <Avatar className="w-12 h-12 sm:w-13 sm:h-13 border border-gray-200 shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+                            {match.person2.avatar && (
+                              <AvatarImage
+                                src={match.person2.avatar}
+                                alt={match.person2.name}
+                              />
+                            )}
+                            <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white font-medium text-xs sm:text-sm">
+                              {match.person2.fallback}
+                            </AvatarFallback>
+                          </Avatar>
+                        </div>
                       </div>
-                      <Avatar className="w-12 h-12 sm:w-13 sm:h-13 border border-gray-200 shrink-0 group-hover:scale-105 transition-transform shadow-xs">
-                        {match.person2.avatar && (
-                          <AvatarImage
-                            src={match.person2.avatar}
-                            alt={match.person2.name}
-                          />
-                        )}
-                        <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white font-medium text-xs sm:text-sm">
-                          {match.person2.fallback}
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                    </motion.div>
+                  ))}
+                </>
+              )}
             </TabsContent>
           </Tabs>
         </div>

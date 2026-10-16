@@ -57,7 +57,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       fallback: "SJ",
       screen: "introductions",
       navData: { tab: "pending" },
-      actionLabel: "Review intro",
     },
     {
       id: 2,
@@ -71,7 +70,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       fallback: "MC",
       screen: "circle",
       navData: { tab: "invites" },
-      actionLabel: "View intro",
     },
     {
       id: 3,
@@ -85,7 +83,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       fallback: "ER",
       screen: "circle",
       navData: { tab: "circle", personId: 3 },
-      actionLabel: "View in circle",
     },
   ];
 
@@ -142,7 +139,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => onNavigate(stat.screen)}
-                    className="bg-gradient-to-br from-[#FAFAFA] to-white rounded-2xl p-4 text-center hover:shadow-md transition-all border border-gray-100"
+                    className="bg-gradient-to-br from-[#FAFAFA] to-white rounded-2xl p-4 text-center hover:shadow-md transition-all border border-gray-100 cursor-pointer"
                   >
                     <div
                       className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2"
@@ -262,7 +259,6 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                         {activity.time}
                       </span>
                       <div className="flex items-center gap-1 text-xs font-medium text-gray-400 group-hover:text-[#1da6e0] transition-colors mt-2">
-                        <span className="hidden sm:inline">{activity.actionLabel}</span>
                         <ChevronRight
                           size={15}
                           className="group-hover:translate-x-1 transition-transform"

@@ -6,14 +6,20 @@ import { Input } from "./ui/input";
 
 interface SignupScreenProps {
   onNavigate: (screen: string) => void;
+  onLogin?: () => void;
 }
 
 export function SignupScreen({
   onNavigate,
+  onLogin,
 }: SignupScreenProps) {
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    onNavigate("home");
+    if (onLogin) {
+      onLogin();
+    } else {
+      onNavigate("home");
+    }
   };
 
   return (
@@ -26,7 +32,7 @@ export function SignupScreen({
         {/* Back Button */}
         <button
           onClick={() => onNavigate("login")}
-          className="mb-4 text-[#3A3A45] flex items-center gap-2 hover:gap-3 transition-all"
+          className="mb-4 text-[#3A3A45] flex items-center gap-2 hover:gap-3 transition-all cursor-pointer"
         >
           <ArrowLeft size={20} />
           <span>Back</span>
@@ -98,11 +104,11 @@ export function SignupScreen({
           <div className="mt-4 text-center">
             <p className="text-[#71717A] text-xs">
               By signing up, you agree to our{" "}
-              <button className="underline">
+              <button className="underline cursor-pointer">
                 Terms of Service
               </button>{" "}
               and{" "}
-              <button className="underline">
+              <button className="underline cursor-pointer">
                 Privacy Policy
               </button>
             </p>
