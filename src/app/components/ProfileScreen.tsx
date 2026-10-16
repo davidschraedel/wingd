@@ -43,10 +43,12 @@ import { toast } from "sonner";
 
 interface ProfileScreenProps {
   onNavigate: (screen: string) => void;
+  onLogout?: () => void;
 }
 
 export function ProfileScreen({
   onNavigate,
+  onLogout,
 }: ProfileScreenProps) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
@@ -199,7 +201,7 @@ export function ProfileScreen({
                     toast.info("Photo updating is disabled in this prototype")
                   }
                   title="Photo update disabled in prototype"
-                  className="absolute bottom-0 right-0 w-7 h-7 bg-gradient-to-br from-[#1da6e0] to-[#05638f] text-white rounded-full flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-transform"
+                  className="absolute bottom-0 right-0 w-7 h-7 bg-gradient-to-br from-[#1da6e0] to-[#05638f] text-white rounded-full flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer"
                 >
                   <Camera size={14} />
                 </button>
@@ -277,7 +279,7 @@ export function ProfileScreen({
                     <button
                       key={item.label}
                       onClick={() => handleMenuClick(item.action)}
-                      className={`w-full flex items-center gap-3 px-5 py-4 hover:bg-gray-50 transition-colors ${index !== section.items.length - 1
+                      className={`w-full flex items-center gap-3 px-5 py-4 hover:bg-gray-50 transition-colors cursor-pointer ${index !== section.items.length - 1
                         ? "border-b border-gray-100"
                         : ""
                         }`}
@@ -309,7 +311,13 @@ export function ProfileScreen({
             transition={{ delay: 0.3 }}
           >
             <Button
-              onClick={() => onNavigate("login")}
+              onClick={() => {
+                if (onLogout) {
+                  onLogout();
+                } else {
+                  onNavigate("login");
+                }
+              }}
               className="w-full bg-red-50 border border-red-100 text-red-500 hover:bg-red-100 hover:text-red-600 rounded-2xl py-6 shadow-sm font-medium"
             >
               <LogOut size={18} className="mr-2" />
@@ -406,7 +414,7 @@ export function ProfileScreen({
                       <button
                         type="button"
                         onClick={() => handleRemoveInterest(tag)}
-                        className="text-gray-400 hover:text-red-500 transition-colors"
+                        className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
                       >
                         <X size={12} />
                       </button>
@@ -452,7 +460,7 @@ export function ProfileScreen({
                       key={suggestion}
                       type="button"
                       onClick={() => handleAddInterest(suggestion)}
-                      className="text-[11px] bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full px-2 py-0.5 transition-colors"
+                      className="text-[11px] bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full px-2 py-0.5 transition-colors cursor-pointer"
                     >
                       + {suggestion}
                     </button>

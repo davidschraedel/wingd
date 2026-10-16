@@ -534,7 +534,7 @@ export function SendIntroductionScreen({
           <div className="flex items-center gap-3 mb-4">
             <button
               onClick={() => onNavigate("back")}
-              className="text-white hover:scale-110 transition-transform"
+              className="text-white hover:scale-110 transition-transform cursor-pointer"
             >
               <ArrowLeft size={24} />
             </button>

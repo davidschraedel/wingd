@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -29,6 +29,54 @@ export type Person = {
   fallback: string;
   interests: string[];
 };
+
+const AUTH_KEY = 'wingd_authenticated';
+
+function getInitialAuthState(): boolean {
+  try {
+    return window.sessionStorage.getItem(AUTH_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function setStoredAuthState(authenticated: boolean) {
+  try {
+    if (authenticated) {
+      window.sessionStorage.setItem(AUTH_KEY, 'true');
+    } else {
+      window.sessionStorage.removeItem(AUTH_KEY);
+    }
+  } catch {
+    // sessionStorage unavailable or restricted
+  }
+}
+
+function ProtectedRouteWrapper({
+  isAuthenticated,
+  children,
+}: {
+  isAuthenticated: boolean;
+  children: React.ReactNode;
+}) {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+}
+
+function PublicOnlyRouteWrapper({
+  isAuthenticated,
+  children,
+}: {
+  isAuthenticated: boolean;
+  children: React.ReactNode;
+}) {
+  if (isAuthenticated) {
+    return <Navigate to="/home" replace />;
+  }
+  return <>{children}</>;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -81,15 +129,39 @@ function NotFoundRoute({
 export function AppRoutes() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(getInitialAuthState);
+
+  const handleLoginSuccess = () => {
+    setStoredAuthState(true);
+    setIsAuthenticated(true);
+    navigate('/home', { replace: true });
+  };
+
+  const handleLogout = () => {
+    setStoredAuthState(false);
+    setIsAuthenticated(false);
+    navigate('/login', { replace: true });
+  };
 
   const handleNavigate = (screen: string, data?: any) => {
     if (screen === 'back') {
       navigate(-1);
       return;
     }
+    if (screen === 'login' || screen === '/login') {
+      handleLogout();
+      return;
+    }
     let path = screen.startsWith('/') ? screen : `/${screen}`;
     if (path === '/network') {
       path = '/circle';
+    }
+    if (
+      (location.pathname === '/login' || location.pathname === '/signup') &&
+      path === '/home'
+    ) {
+      handleLoginSuccess();
+      return;
     }
     if (location.pathname === path && !data) {
       return;
@@ -118,26 +190,116 @@ export function AppRoutes() {
           transition={{ duration: 0.15 }}
         >
           <Routes location={location}>
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/home" element={<HomeScreen onNavigate={handleNavigate} />} />
-            <Route path="/circle" element={<CircleScreen onNavigate={handleNavigate} />} />
+            <Route
+              path="/"
+              element={
+                <Navigate to={isAuthenticated ? '/home' : '/login'} replace />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicOnlyRouteWrapper isAuthenticated={isAuthenticated}>
+                  <LoginScreen
+                    onNavigate={handleNavigate}
+                    onLogin={handleLoginSuccess}
+                  />
+                </PublicOnlyRouteWrapper>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PublicOnlyRouteWrapper isAuthenticated={isAuthenticated}>
+                  <SignupScreen
+                    onNavigate={handleNavigate}
+                    onLogin={handleLoginSuccess}
+                  />
+                </PublicOnlyRouteWrapper>
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <HomeScreen onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
+            />
+            <Route
+              path="/circle"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <CircleScreen onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
+            />
             <Route path="/network" element={<Navigate to="/circle" replace />} />
-            <Route path="/introductions" element={<IntroductionsScreen onNavigate={handleNavigate} />} />
-            <Route path="/chats" element={<ChatsScreen onNavigate={handleNavigate} />} />
-            <Route path="/chat-detail" element={<ChatDetailScreen onNavigate={handleNavigate} />} />
-            <Route path="/profile" element={<ProfileScreen onNavigate={handleNavigate} />} />
+            <Route
+              path="/introductions"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <IntroductionsScreen onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
+            />
+            <Route
+              path="/chats"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <ChatsScreen onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
+            />
+            <Route
+              path="/chat-detail"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <ChatDetailScreen onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <ProfileScreen
+                    onNavigate={handleNavigate}
+                    onLogout={handleLogout}
+                  />
+                </ProtectedRouteWrapper>
+              }
+            />
             <Route
               path="/send-introduction"
-              element={<SendIntroductionRoute onNavigate={handleNavigate} />}
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <SendIntroductionRoute onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
             />
-            <Route path="/add-to-circle" element={<AddToCircleScreen onNavigate={handleNavigate} />} />
-            <Route path="/login" element={<LoginScreen onNavigate={handleNavigate} />} />
-            <Route path="/signup" element={<SignupScreen onNavigate={handleNavigate} />} />
-            <Route path="*" element={<NotFoundRoute onNavigate={handleNavigate} />} />
+            <Route
+              path="/add-to-circle"
+              element={
+                <ProtectedRouteWrapper isAuthenticated={isAuthenticated}>
+                  <AddToCircleScreen onNavigate={handleNavigate} />
+                </ProtectedRouteWrapper>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                isAuthenticated ? (
+                  <NotFoundRoute onNavigate={handleNavigate} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
           </Routes>
         </motion.div>
       </AnimatePresence>
-      {activeNav && (
+      {isAuthenticated && activeNav && (
         <BottomNav active={activeNav} onNavigate={handleNavigate} />
       )}
       <Toaster position="top-center" richColors />

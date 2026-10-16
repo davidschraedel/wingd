@@ -5,12 +5,25 @@ import { Input } from "./ui/input";
 
 interface LoginScreenProps {
   onNavigate: (screen: string) => void;
+  onLogin?: () => void;
 }
 
-export function LoginScreen({ onNavigate }: LoginScreenProps) {
+export function LoginScreen({ onNavigate, onLogin }: LoginScreenProps) {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    onNavigate("home");
+    if (onLogin) {
+      onLogin();
+    } else {
+      onNavigate("home");
+    }
+  };
+
+  const handleSocialLogin = () => {
+    if (onLogin) {
+      onLogin();
+    } else {
+      onNavigate("home");
+    }
   };
 
   return (
@@ -73,7 +86,7 @@ export function LoginScreen({ onNavigate }: LoginScreenProps) {
             <Button
               type="button"
               className="w-full bg-white/95 hover:bg-white border-0 rounded-2xl py-6 shadow-md text-[rgb(98,98,106)]"
-              onClick={() => onNavigate("home")}
+              onClick={handleSocialLogin}
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path
@@ -99,7 +112,7 @@ export function LoginScreen({ onNavigate }: LoginScreenProps) {
             <Button
               type="button"
               className="w-full bg-white/95 hover:bg-white border-0 rounded-2xl py-6 shadow-md text-[rgb(98,98,106)]"
-              onClick={() => onNavigate("home")}
+              onClick={handleSocialLogin}
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -116,7 +129,7 @@ export function LoginScreen({ onNavigate }: LoginScreenProps) {
           <div className="mt-6 text-center">
             <button
               onClick={() => onNavigate("signup")}
-              className="text-[#71717A] text-sm hover:text-[#3A3A45] transition-colors"
+              className="text-[#71717A] text-sm hover:text-[#3A3A45] transition-colors cursor-pointer"
             >
               Don't have an account?{" "}
               <span className="underline">Sign up</span>

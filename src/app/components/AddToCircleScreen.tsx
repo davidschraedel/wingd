@@ -107,7 +107,7 @@ export function AddToCircleScreen({
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
           <button
             onClick={() => onNavigate("circle")}
-            className="mb-4 text-white flex items-center gap-2 hover:gap-3 transition-all"
+            className="mb-4 text-white flex items-center gap-2 hover:gap-3 transition-all cursor-pointer"
           >
             <ArrowLeft size={20} />
             <span>Back to Circle</span>

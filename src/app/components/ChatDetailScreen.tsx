@@ -60,7 +60,7 @@ export function ChatDetailScreen({ onNavigate }: ChatDetailScreenProps) {
         <div className="w-full md:w-2/3 max-w-4xl mx-auto flex items-center gap-3">
           <button
             onClick={() => onNavigate('chats')}
-            className="text-white"
+            className="text-white cursor-pointer"
           >
             <ArrowLeft size={24} />
           </button>
@@ -72,7 +72,7 @@ export function ChatDetailScreen({ onNavigate }: ChatDetailScreenProps) {
             <div className="text-white">Jessica Barnes</div>
             <p className="text-white/80 text-xs">Online</p>
           </div>
-          <button className="text-white">
+          <button className="text-white cursor-pointer">
             <MoreVertical size={24} />
           </button>
         </div>

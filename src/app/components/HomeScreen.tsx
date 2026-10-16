@@ -139,7 +139,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
                     onClick={() => onNavigate(stat.screen)}
-                    className="bg-gradient-to-br from-[#FAFAFA] to-white rounded-2xl p-4 text-center hover:shadow-md transition-all border border-gray-100"
+                    className="bg-gradient-to-br from-[#FAFAFA] to-white rounded-2xl p-4 text-center hover:shadow-md transition-all border border-gray-100 cursor-pointer"
                   >
                     <div
                       className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2"
