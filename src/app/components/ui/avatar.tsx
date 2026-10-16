@@ -23,12 +23,20 @@ function Avatar({
 
 function AvatarImage({
   className,
+  src,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+  const base = import.meta.env.BASE_URL || "/";
+  const resolvedSrc =
+    src && typeof src === "string" && src.startsWith("/") && !src.startsWith(base)
+      ? `${base}${src.slice(1)}`
+      : src;
+
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
-      className={cn("aspect-square size-full", className)}
+      className={cn("aspect-square size-full object-cover object-center", className)}
+      src={resolvedSrc}
       {...props}
     />
   );

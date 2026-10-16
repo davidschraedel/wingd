@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowLeft, Send, MoreVertical } from 'lucide-react';
-import { Avatar, AvatarFallback } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { useState } from 'react';
@@ -65,10 +65,11 @@ export function ChatDetailScreen({ onNavigate }: ChatDetailScreenProps) {
             <ArrowLeft size={24} />
           </button>
           <Avatar className="w-10 h-10 bg-white/20">
+            <AvatarImage src="/avatars/sarah.jpg" alt="Jessica Barnes" />
             <AvatarFallback className="text-white/90">JB</AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <div className="text-white">Jess Bogana</div>
+            <div className="text-white">Jessica Barnes</div>
             <p className="text-white/80 text-xs">Online</p>
           </div>
           <button className="text-white">
@@ -90,16 +91,16 @@ export function ChatDetailScreen({ onNavigate }: ChatDetailScreenProps) {
             <div
               className={`max-w-[75%] rounded-2xl px-4 py-3 ${
                 msg.sender === 'me'
-                  ? 'bg-gradient-to-r from-[#1da6e0] to-[#05638f] text-white shadow-sm'
-                  : 'bg-white shadow-sm'
+                  ? 'bg-white text-gray-800 shadow-sm border border-gray-100'
+                  : 'bg-gradient-to-r from-[#1da6e0] to-[#05638f] text-white shadow-sm'
               }`}
             >
-              <p className={msg.sender === 'me' ? 'text-white' : 'text-gray-800'}>
+              <p className={msg.sender === 'me' ? 'text-gray-800' : 'text-white'}>
                 {msg.text}
               </p>
               <span
                 className={`text-xs mt-1 block ${
-                  msg.sender === 'me' ? 'text-white/80' : 'text-gray-400'
+                  msg.sender === 'me' ? 'text-gray-400' : 'text-white/80'
                 }`}
               >
                 {msg.time}

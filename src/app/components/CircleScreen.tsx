@@ -50,8 +50,7 @@ export function CircleScreen({
       name: "Sarah Johnson",
       mutualFriends: 12,
       interests: ["Hiking", "Photography"],
-      avatar:
-        "https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/sarah.jpg",
       fallback: "SJ",
       status: "connected",
     },
@@ -60,8 +59,7 @@ export function CircleScreen({
       name: "Mike Chen",
       mutualFriends: 8,
       interests: ["Coffee", "Tech"],
-      avatar:
-        "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/mike.jpg",
       fallback: "MC",
       status: "connected",
     },
@@ -70,8 +68,7 @@ export function CircleScreen({
       name: "Emily Roberts",
       mutualFriends: 15,
       interests: ["Art", "Music"],
-      avatar:
-        "https://images.unsplash.com/photo-1706025090794-7ade2c1b6208?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/emily.jpg",
       fallback: "ER",
       status: "connected",
     },
@@ -80,8 +77,7 @@ export function CircleScreen({
       name: "Alex Martinez",
       mutualFriends: 6,
       interests: ["Fitness", "Travel"],
-      avatar:
-        "https://images.unsplash.com/photo-1760551937527-2bc6cfe45180?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/alex.jpg",
       fallback: "AM",
       status: "connected",
     },
@@ -142,8 +138,7 @@ export function CircleScreen({
         name: "Sarah Johnson",
         email: null,
         isUser: true,
-        avatar:
-          "https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+        avatar: "/avatars/sarah.jpg",
         fallback: "SJ",
       },
       person2: {
@@ -182,16 +177,14 @@ export function CircleScreen({
         name: "Mike Chen",
         email: null,
         isUser: true,
-        avatar:
-          "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+        avatar: "/avatars/mike.jpg",
         fallback: "MC",
       },
       person2: {
         name: "Emily Roberts",
         email: null,
         isUser: true,
-        avatar:
-          "https://images.unsplash.com/photo-1706025090794-7ade2c1b6208?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+        avatar: "/avatars/emily.jpg",
         fallback: "ER",
       },
       message:

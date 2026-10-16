@@ -39,8 +39,7 @@ export function AddToCircleScreen({
       name: "Chris Anderson",
       mutualFriends: 7,
       interests: ["Running", "Books"],
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/chris.jpg",
       fallback: "CA",
     },
     {
@@ -48,8 +47,7 @@ export function AddToCircleScreen({
       name: "Diana Williams",
       mutualFriends: 4,
       interests: ["Yoga", "Design"],
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/diana.jpg",
       fallback: "DW",
     },
     {
@@ -57,8 +55,7 @@ export function AddToCircleScreen({
       name: "Ryan Thompson",
       mutualFriends: 9,
       interests: ["Gaming", "Coding"],
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/ryan.jpg",
       fallback: "RT",
     },
     {
@@ -66,6 +63,7 @@ export function AddToCircleScreen({
       name: "Olivia Parker",
       mutualFriends: 2,
       interests: ["Fashion", "Travel"],
+      avatar: "/avatars/olivia.jpg",
       fallback: "OP",
     },
     {
@@ -73,8 +71,7 @@ export function AddToCircleScreen({
       name: "Marcus Johnson",
       mutualFriends: 5,
       interests: ["Basketball", "Movies"],
-      avatar:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/marcus.jpg",
       fallback: "MJ",
     },
   ]);

@@ -46,12 +46,11 @@ export function IntroductionsScreen({
   const [pendingIntros, setPendingIntros] = useState([
     {
       id: 1,
-      name: "Alexis Martinez",
+      name: "Alex Martinez",
       age: 26,
       introducedBy: "Sarah",
       interests: ["Hiking", "Photography"],
-      avatar:
-        "https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/alex.jpg",
       fallback: "AM",
       bio: "Loves outdoor adventures and capturing moments through the lens.",
       message:
@@ -59,29 +58,27 @@ export function IntroductionsScreen({
     },
     {
       id: 2,
-      name: "Braghday Dory",
+      name: "Brady Doyle",
       age: 28,
       introducedBy: "Mike",
       interests: ["Coffee", "Tech"],
-      avatar:
-        "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/chris.jpg",
       fallback: "BD",
       bio: "Coffee enthusiast and tech startup founder.",
       message:
-        "Both fashion lovers who work in tech. You might want to grab lunch together!",
+        "Both passionate about startups and tech. You might want to grab coffee together!",
     },
     {
       id: 3,
-      name: "Lenrie Bonn",
+      name: "Lena Bennett",
       age: 25,
       introducedBy: "Emily",
       interests: ["Art", "Music"],
-      avatar:
-        "https://images.unsplash.com/photo-1706025090794-7ade2c1b6208?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/diana.jpg",
       fallback: "LB",
       bio: "Artist and musician with a passion for creative expression.",
       message:
-        "Lenrie has an amazing art studio and loves live music, just like you!",
+        "Lena has an amazing art studio and loves live music, just like you!",
     },
   ]);
 
@@ -92,8 +89,7 @@ export function IntroductionsScreen({
       age: 27,
       introducedBy: "Alex",
       interests: ["Fitness", "Travel"],
-      avatar:
-        "https://images.unsplash.com/photo-1760551937527-2bc6cfe45180?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/jordan.jpg",
       fallback: "JS",
       date: "Accepted 3 days ago",
     },
@@ -103,6 +99,7 @@ export function IntroductionsScreen({
       age: 29,
       introducedBy: "Jordan",
       interests: ["Music", "Food"],
+      avatar: "/avatars/olivia.jpg",
       fallback: "TB",
       date: "Accepted 1 week ago",
     },

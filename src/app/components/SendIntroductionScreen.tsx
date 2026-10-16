@@ -75,8 +75,7 @@ export function SendIntroductionScreen({
     {
       id: "1",
       name: "Sarah Johnson",
-      avatar:
-        "https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/sarah.jpg",
       fallback: "SJ",
       interests: ["Hiking", "Photography"],
       type: "circle",
@@ -84,8 +83,7 @@ export function SendIntroductionScreen({
     {
       id: "2",
       name: "Mike Chen",
-      avatar:
-        "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/mike.jpg",
       fallback: "MC",
       interests: ["Coffee", "Tech"],
       type: "circle",
@@ -93,8 +91,7 @@ export function SendIntroductionScreen({
     {
       id: "3",
       name: "Emily Roberts",
-      avatar:
-        "https://images.unsplash.com/photo-1706025090794-7ade2c1b6208?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/emily.jpg",
       fallback: "ER",
       interests: ["Art", "Music"],
       type: "circle",
@@ -102,8 +99,7 @@ export function SendIntroductionScreen({
     {
       id: "4",
       name: "Alex Martinez",
-      avatar:
-        "https://images.unsplash.com/photo-1760551937527-2bc6cfe45180?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/alex.jpg",
       fallback: "AM",
       interests: ["Fitness", "Travel"],
       type: "circle",

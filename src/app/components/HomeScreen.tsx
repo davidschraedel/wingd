@@ -67,39 +67,36 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
   const recentActivity = [
     {
       id: 1,
-      name: "Jerah Johnson",
+      name: "Sarah Johnson",
       action: "introduced you to",
       target: "Alex Martinez",
       type: "introduction",
       tags: ["Hiking", "Photography"],
       time: "2h ago",
-      avatar:
-        "https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b29tYW4lMjBwb3J0cmFpdHxlbnwxfHx8fDE3NjIxNTcwNTV8MA&ixlib=rb-4.1.0&q=80&w=200",
-      fallback: "JJ",
+      avatar: "/avatars/sarah.jpg",
+      fallback: "SJ",
     },
     {
       id: 2,
-      name: "Sarah Chen",
+      name: "Mike Chen",
       action: "accepted your introduction",
       target: null,
       type: "accepted",
       tags: ["Coffee", "Art"],
       time: "5h ago",
-      avatar:
-        "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYW4lMjBwb3J0cmFpdHxlbnwxfHx8fDE3NjIxNjA1NjV8MA&ixlib=rb-4.1.0&q=80&w=200",
-      fallback: "SC",
+      avatar: "/avatars/mike.jpg",
+      fallback: "MC",
     },
     {
       id: 3,
-      name: "Mike Roberts",
+      name: "Emily Roberts",
       action: "joined your circle",
       target: null,
       type: "circle",
       tags: [],
       time: "1d ago",
-      avatar:
-        "https://images.unsplash.com/photo-1706025090794-7ade2c1b6208?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b3VuZyUyMHByb2Zlc3Npb25hbCUyMGhlYWRzaG90fGVufDF8fHx8MTc2MjE3OTU2NHww&ixlib=rb-4.1.0&q=80&w=200",
-      fallback: "MR",
+      avatar: "/avatars/emily.jpg",
+      fallback: "ER",
     },
   ];
 
