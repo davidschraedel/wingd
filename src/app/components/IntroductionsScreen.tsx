@@ -125,10 +125,9 @@ export function IntroductionsScreen({
         ...acceptedIntros,
       ]);
       toast.success(`You accepted the introduction!`, {
-        description: `${name} has been notified. Start chatting now!`,
+        description: `${name} has been notified. They're now in your Matches!`,
         icon: <Check className="text-green-500" />,
       });
-      setTimeout(() => onNavigate("chats"), 1500);
     }
   };
 
@@ -200,7 +199,6 @@ export function IntroductionsScreen({
                     key={intro.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -100 }}
                     transition={{ delay: index * 0.1 }}
                     className="bg-white rounded-2xl p-5 shadow-sm border-2 border-[#1da6e0]/10"
                   >
@@ -330,7 +328,6 @@ export function IntroductionsScreen({
                     key={intro.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, x: -100 }}
                     transition={{ delay: index * 0.1 }}
                     className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer border-2 border-[#1da6e0]/10"
                   >

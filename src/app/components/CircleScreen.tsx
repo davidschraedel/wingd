@@ -492,7 +492,6 @@ export function CircleScreen({
                   key={invitation.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
                   transition={{ delay: index * 0.1 }}
                   className="bg-white rounded-2xl p-5 shadow-sm border-2 border-[#77d75b]/20"
                 >
