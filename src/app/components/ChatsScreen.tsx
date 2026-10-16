@@ -8,6 +8,7 @@ import {
 import { Input } from "./ui/input";
 import { Badge } from "./ui/badge";
 import { useState } from "react";
+import { useAppStore } from "../context/AppContext";
 
 interface ChatsScreenProps {
   onNavigate: (screen: string) => void;
@@ -15,66 +16,7 @@ interface ChatsScreenProps {
 
 export function ChatsScreen({ onNavigate }: ChatsScreenProps) {
   const [searchQuery, setSearchQuery] = useState("");
-
-  const chats = [
-    {
-      id: 1,
-      name: "Jessica Barnes",
-      lastMessage: "That's great!",
-      time: "New",
-      unread: true,
-      avatar: "/avatars/sarah.jpg",
-      fallback: "JB",
-      online: true,
-      type: "dating",
-    },
-    {
-      id: 2,
-      name: "Harry Owens",
-      lastMessage:
-        "Next week I have a trip planned. I'm so excited 🥲",
-      time: "2h",
-      unread: false,
-      avatar: "/avatars/mike.jpg",
-      fallback: "HO",
-      online: false,
-      type: "dating",
-    },
-    {
-      id: 3,
-      name: "Blake Owens",
-      lastMessage: "Well, that would be optimal ;)",
-      time: "1d",
-      unread: false,
-      avatar: "/avatars/alex.jpg",
-      fallback: "BO",
-      online: false,
-      type: "dating",
-    },
-    {
-      id: 4,
-      name: "Mina Patel",
-      lastMessage:
-        "They decided on a spontaneous adventure and now I can't find them anywhere, hahaha",
-      time: "3d",
-      unread: false,
-      avatar: "/avatars/emily.jpg",
-      fallback: "MP",
-      online: false,
-      type: "dating",
-    },
-    {
-      id: 5,
-      name: "Vanessa Boyd",
-      lastMessage: "🙃",
-      time: "1w",
-      unread: false,
-      avatar: "/avatars/jordan.jpg",
-      fallback: "VB",
-      online: true,
-      type: "dating",
-    },
-  ];
+  const { chats, openChatWithPerson } = useAppStore();
 
   const filteredChats = chats.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -113,7 +55,10 @@ export function ChatsScreen({ onNavigate }: ChatsScreenProps) {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
-                onClick={() => onNavigate("chat-detail")}
+                onClick={() => {
+                  openChatWithPerson(chat);
+                  onNavigate("chat-detail");
+                }}
                 className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer border-2 border-[#ff9883]/10"
               >
                 <div className="flex items-center gap-3">

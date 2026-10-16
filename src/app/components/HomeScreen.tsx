@@ -14,31 +14,35 @@ import {
   AvatarImage,
 } from "./ui/avatar";
 import { HeartHandshakeIcon } from "./HeartHandshakeIcon";
+import { useAppStore } from "../context/AppContext";
 
 interface HomeScreenProps {
   onNavigate: (screen: string, data?: any) => void;
 }
 
 export function HomeScreen({ onNavigate }: HomeScreenProps) {
+  const { userProfile, chats, pendingIntros, circleCount } = useAppStore();
+  const firstName = userProfile.name.trim().split(/\s+/)[0] || "Sam";
+
   const stats = [
     {
       icon: Users,
       label: "Circle",
-      value: 24,
+      value: circleCount,
       color: "#77d75b",
       screen: "circle",
     },
     {
       icon: Heart,
-      label: "Introduced",
-      value: 5,
+      label: "Intros",
+      value: pendingIntros.length,
       color: "#ff9883",
       screen: "introductions",
     },
     {
       icon: MessageCircle,
       label: "Chats",
-      value: 8,
+      value: chats.length,
       color: "#1da6e0",
       screen: "chats",
     },
@@ -86,8 +90,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
     },
   ];
 
-  const activitySummary =
-    "You have 2 new introductions waiting for your response. Sarah accepted your intro to Mike—they're chatting now! 3 people from your circle are active today.";
+  const activitySummary = `You have ${pendingIntros.length} new introduction${pendingIntros.length === 1 ? '' : 's'} waiting for your response. Sarah accepted your intro to Mike—they're chatting now! 3 people from your circle are active today.`;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] pb-24">
@@ -100,7 +103,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         >
           <div>
             <h2 className="text-white/90 text-sm sm:text-base font-medium mb-0.5">Welcome back,</h2>
-            <h1 className="text-white text-2xl sm:text-3xl font-bold tracking-tight">Sam 👋</h1>
+            <h1 className="text-white text-2xl sm:text-3xl font-bold tracking-tight">{firstName} 👋</h1>
           </div>
 
           {/* Wingd Brand Badge */}

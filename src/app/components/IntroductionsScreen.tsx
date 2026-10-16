@@ -32,6 +32,7 @@ import {
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { toast } from "sonner";
+import { useAppStore } from "../context/AppContext";
 
 interface IntroductionsScreenProps {
   onNavigate: (screen: string) => void;
@@ -43,6 +44,14 @@ export function IntroductionsScreen({
   const location = useLocation();
   const initialTab = (location.state as any)?.tab || "pending";
   const [activeTab, setActiveTab] = useState(initialTab);
+  const {
+    pendingIntros,
+    acceptedIntros,
+    acceptIntro,
+    rejectIntro,
+    removeAcceptedIntro,
+    openChatWithPerson,
+  } = useAppStore();
 
   useEffect(() => {
     if ((location.state as any)?.tab) {
@@ -58,96 +67,16 @@ export function IntroductionsScreen({
     );
   };
 
-  const [pendingIntros, setPendingIntros] = useState([
-    {
-      id: 1,
-      name: "Alex Martinez",
-      age: 26,
-      introducedBy: "Sarah",
-      interests: ["Hiking", "Photography"],
-      avatar: "/avatars/alex.jpg",
-      fallback: "AM",
-      bio: "Loves outdoor adventures and capturing moments through the lens.",
-      message:
-        "You both love hiking and photography! I think you'd have great conversations about travel.",
-    },
-    {
-      id: 2,
-      name: "Brady Doyle",
-      age: 28,
-      introducedBy: "Mike",
-      interests: ["Coffee", "Tech"],
-      avatar: "/avatars/chris.jpg",
-      fallback: "BD",
-      bio: "Coffee enthusiast and tech startup founder.",
-      message:
-        "Both passionate about startups and tech. You might want to grab coffee together!",
-    },
-    {
-      id: 3,
-      name: "Lena Bennett",
-      age: 25,
-      introducedBy: "Emily",
-      interests: ["Art", "Music"],
-      avatar: "/avatars/diana.jpg",
-      fallback: "LB",
-      bio: "Artist and musician with a passion for creative expression.",
-      message:
-        "Lena has an amazing art studio and loves live music, just like you!",
-    },
-  ]);
-
-  const [acceptedIntros, setAcceptedIntros] = useState([
-    {
-      id: 4,
-      name: "Jordan Smith",
-      age: 27,
-      introducedBy: "Alex",
-      interests: ["Fitness", "Travel"],
-      avatar: "/avatars/jordan.jpg",
-      fallback: "JS",
-      date: "Accepted 3 days ago",
-    },
-    {
-      id: 5,
-      name: "Taylor Brown",
-      age: 29,
-      introducedBy: "Jordan",
-      interests: ["Music", "Food"],
-      avatar: "/avatars/olivia.jpg",
-      fallback: "TB",
-      date: "Accepted 1 week ago",
-    },
-  ]);
-
   const handleAccept = (id: number, name: string) => {
-    const intro = pendingIntros.find((i) => i.id === id);
-    if (intro) {
-      setPendingIntros(
-        pendingIntros.filter((i) => i.id !== id),
-      );
-      setAcceptedIntros([
-        {
-          id: intro.id,
-          name: intro.name,
-          age: intro.age,
-          introducedBy: intro.introducedBy,
-          interests: intro.interests,
-          avatar: intro.avatar,
-          fallback: intro.fallback,
-          date: "Just accepted",
-        },
-        ...acceptedIntros,
-      ]);
-      toast.success(`You accepted the introduction!`, {
-        description: `${name} has been notified. They're now in your Matches!`,
-        icon: <Check className="text-green-500" />,
-      });
-    }
+    acceptIntro(id);
+    toast.success(`You matched with ${name}!`, {
+      description: `${name} has been notified and added to your Chats. Click Chat to say hello!`,
+      icon: <Check className="text-green-500" />,
+    });
   };
 
   const handleReject = (id: number, name: string) => {
-    setPendingIntros(pendingIntros.filter((i) => i.id !== id));
+    rejectIntro(id);
     toast.success(`Introduction declined`, {
       description: `${name} won't be notified about this.`,
     });
@@ -157,12 +86,20 @@ export function IntroductionsScreen({
     id: number,
     name: string,
   ) => {
-    setAcceptedIntros(
-      acceptedIntros.filter((i) => i.id !== id),
-    );
+    removeAcceptedIntro(id);
     toast.success(`${name} removed from dating connections`, {
       description: "They won't be notified about this change.",
     });
+  };
+
+  const handleOpenChat = (intro: any) => {
+    openChatWithPerson({
+      name: intro.name,
+      avatar: intro.avatar,
+      fallback: intro.fallback,
+      online: true,
+    });
+    onNavigate("chat-detail");
   };
 
   return (
@@ -345,7 +282,7 @@ export function IntroductionsScreen({
                     <div className="flex items-center gap-4">
                       <Avatar
                         className="w-16 h-16 border-2 border-[#1da6e0]/30 cursor-pointer"
-                        onClick={() => onNavigate("chats")}
+                        onClick={() => handleOpenChat(intro)}
                       >
                         {intro.avatar && (
                           <AvatarImage
@@ -359,7 +296,7 @@ export function IntroductionsScreen({
                       </Avatar>
                       <div
                         className="flex-1 cursor-pointer"
-                        onClick={() => onNavigate("chats")}
+                        onClick={() => handleOpenChat(intro)}
                       >
                         <div className="flex items-center gap-2 mb-1">
                           <span>{intro.name}</span>
@@ -379,7 +316,7 @@ export function IntroductionsScreen({
                       </div>
                       <div className="flex flex-col gap-2">
                         <Button
-                          onClick={() => onNavigate("chats")}
+                          onClick={() => handleOpenChat(intro)}
                           className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full border-0 shadow-sm px-6"
                         >
                           Chat

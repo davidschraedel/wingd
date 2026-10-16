@@ -21,6 +21,7 @@ import { AddToCircleScreen } from './components/AddToCircleScreen';
 import { NotFoundScreen } from './components/NotFoundScreen';
 import { BottomNav } from './components/BottomNav';
 import { Toaster } from './components/ui/sonner';
+import { AppProvider, useAppStore } from './context/AppContext';
 
 export type Person = {
   id: number;
@@ -130,6 +131,7 @@ export function AppRoutes() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(getInitialAuthState);
+  const { resetAllData } = useAppStore();
 
   const handleLoginSuccess = () => {
     setStoredAuthState(true);
@@ -138,6 +140,7 @@ export function AppRoutes() {
   };
 
   const handleLogout = () => {
+    resetAllData();
     setStoredAuthState(false);
     setIsAuthenticated(false);
     navigate('/login', { replace: true });
@@ -312,7 +315,9 @@ export default function App() {
 
   return (
     <BrowserRouter basename={basename}>
-      <AppRoutes />
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
     </BrowserRouter>
   );
 }

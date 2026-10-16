@@ -45,6 +45,7 @@ import {
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { toast } from "sonner";
+import { useAppStore } from "../context/AppContext";
 
 function formatNamesList(names: string[]): string {
   if (names.length === 0) return "";
@@ -60,199 +61,17 @@ interface CircleScreenProps {
 export function CircleScreen({
   onNavigate,
 }: CircleScreenProps) {
+  const {
+    introsGiven: pendingInvitations,
+    cancelIntroGiven,
+    circleConnections: connections,
+    setCircleConnections: setConnections,
+    matchedInvitations,
+  } = useAppStore();
   const location = useLocation();
   const initialTab = (location.state as any)?.tab || "circle";
   const [activeTab, setActiveTab] = useState(initialTab);
   const [searchQuery, setSearchQuery] = useState("");
-  const [connections, setConnections] = useState([
-    {
-      id: 1,
-      name: "Sarah Johnson",
-      mutualFriends: 12,
-      interests: ["Hiking", "Photography"],
-      avatar: "/avatars/sarah.jpg",
-      fallback: "SJ",
-      status: "connected",
-      bio: "Landscape photographer and trail runner. Always happy to meet fellow creators and hikers!",
-    },
-    {
-      id: 2,
-      name: "Mike Chen",
-      mutualFriends: 8,
-      interests: ["Coffee", "Tech"],
-      avatar: "/avatars/mike.jpg",
-      fallback: "MC",
-      status: "connected",
-      bio: "Software engineer & specialty coffee enthusiast. Exploring new tech and roasters in the city.",
-    },
-    {
-      id: 3,
-      name: "Emily Roberts",
-      mutualFriends: 15,
-      interests: ["Art", "Music"],
-      avatar: "/avatars/emily.jpg",
-      fallback: "ER",
-      status: "connected",
-      bio: "Illustrator and vinyl collector. Passionate about community art projects and live indie music.",
-    },
-    {
-      id: 4,
-      name: "Alex Martinez",
-      mutualFriends: 6,
-      interests: ["Fitness", "Travel"],
-      avatar: "/avatars/alex.jpg",
-      fallback: "AM",
-      status: "connected",
-      bio: "Personal trainer and travel blogger. Exploring 30 countries and counting!",
-    },
-    {
-      id: 5,
-      name: "Kaden Dyer",
-      mutualFriends: 8,
-      interests: ["Chess", "Gymnastics"],
-      fallback: "KD",
-      status: "connected",
-      bio: "Chess strategist and former competitive gymnast. Always down for a match or puzzle.",
-    },
-    {
-      id: 6,
-      name: "Gael Clay",
-      mutualFriends: 3,
-      interests: ["Wizardry", "Dance"],
-      fallback: "GC",
-      status: "connected",
-      bio: "Contemporary dancer and theatre fan. Exploring movement, performance art, and storytelling.",
-    },
-    {
-      id: 7,
-      name: "Augustine Munoz",
-      mutualFriends: 3,
-      interests: ["Film", "Cooking"],
-      fallback: "AM",
-      status: "connected",
-      bio: "Indie filmmaker and home chef. Exploring culinary traditions and short-form documentaries.",
-    },
-    {
-      id: 8,
-      name: "Gracelyn Daniel",
-      mutualFriends: 5,
-      interests: ["Sports", "Trivia"],
-      fallback: "GD",
-      status: "connected",
-      bio: "Sports fanatic and pub trivia host. Love organizing team game nights and casual hangouts.",
-    },
-    {
-      id: 9,
-      name: "Jordan Lee",
-      mutualFriends: 4,
-      interests: ["Reading", "Cooking"],
-      avatar: "/avatars/jordan.jpg",
-      fallback: "JL",
-      status: "connected",
-      bio: "Book lover and amateur baker. Looking to exchange book recommendations and sourdough recipes.",
-    },
-    {
-      id: 10,
-      name: "Taylor Swift",
-      mutualFriends: 3,
-      interests: ["Music", "Fashion"],
-      fallback: "TS",
-      status: "suggested",
-      bio: "Songwriter, musician, and storyteller. Believer in warm connections and creative sparks.",
-    },
-    {
-      id: 11,
-      name: "Chris Anderson",
-      mutualFriends: 2,
-      interests: ["Running", "Books"],
-      avatar: "/avatars/chris.jpg",
-      fallback: "CA",
-      status: "suggested",
-      bio: "Marathon runner and bookstore browser. Always looking for new routes and great reads.",
-    },
-  ]);
-
-  const [pendingInvitations, setPendingInvitations] = useState([
-    {
-      id: 101,
-      person1: {
-        name: "Sarah Johnson",
-        email: null,
-        isUser: true,
-        avatar: "/avatars/sarah.jpg",
-        fallback: "SJ",
-      },
-      person2: {
-        name: "David Chen",
-        email: "david.chen@email.com",
-        isUser: false,
-        fallback: "DC",
-      },
-      message:
-        "You both love startups and tech! Would be great to connect.",
-      createdAt: "2 days ago",
-      waitingFor: ["David Chen"],
-    },
-    {
-      id: 102,
-      person1: {
-        name: "Lisa Park",
-        email: "lisa.park@email.com",
-        isUser: false,
-        fallback: "LP",
-      },
-      person2: {
-        name: "James Wilson",
-        email: "james.w@email.com",
-        isUser: false,
-        fallback: "JW",
-      },
-      message:
-        "Both amazing photographers who I think would hit it off!",
-      createdAt: "5 days ago",
-      waitingFor: ["Lisa Park", "James Wilson"],
-    },
-    {
-      id: 103,
-      person1: {
-        name: "Mike Chen",
-        email: null,
-        isUser: true,
-        avatar: "/avatars/mike.jpg",
-        fallback: "MC",
-      },
-      person2: {
-        name: "Emily Roberts",
-        email: null,
-        isUser: true,
-        avatar: "/avatars/emily.jpg",
-        fallback: "ER",
-      },
-      message:
-        "You both share a passion for art and coffee. I think you'd really enjoy each other's company!",
-      createdAt: "1 week ago",
-      waitingFor: [],
-    },
-  ]);
-
-  const [matchedInvitations, setMatchedInvitations] = useState([
-    {
-      id: 201,
-      person1: {
-        id: 4,
-        name: "Alex Martinez",
-        avatar: "/avatars/alex.jpg",
-        fallback: "AM",
-      },
-      person2: {
-        id: 9,
-        name: "Jordan Lee",
-        avatar: "/avatars/jordan.jpg",
-        fallback: "JL",
-      },
-      createdAt: "3 days ago",
-    },
-  ]);
 
   const [isManageMode, setIsManageMode] = useState(false);
   const [selectedToRemove, setSelectedToRemove] = useState<Set<number>>(new Set());
@@ -312,9 +131,7 @@ export function CircleScreen({
   };
 
   const handleCancelInvitation = (id: number) => {
-    setPendingInvitations(
-      pendingInvitations.filter((i) => i.id !== id),
-    );
+    cancelIntroGiven(id);
     toast.success("Invitation cancelled", {
       description: "The pending introduction has been removed.",
     });
