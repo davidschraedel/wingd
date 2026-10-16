@@ -1,21 +1,29 @@
 import svgPaths from "../imports/svg-lrqmkfgl8r";
 
-interface HeartHandshakeIconProps {
+interface HeartHandshakeIconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
   size?: number;
 }
 
 export function HeartHandshakeIcon({
   className = "",
-  size = 32,
+  size,
+  width,
+  height,
+  ...props
 }: HeartHandshakeIconProps) {
+  const resolvedWidth = width ?? size;
+  const resolvedHeight = height ?? (size ? (size * 454) / 794 : undefined);
+
   return (
     <svg
-      width="794"
-      height="454"
+      width={resolvedWidth}
+      height={resolvedHeight}
       viewBox="0 0 794 454"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...props}
     >
       <path
         d="M384.271 394.27C377.846 380.73 392.812 366.973 404.951 375.259C417.496 383.822 411.986 401.984 396.836 402.002C390.293 402.01 386.974 399.967 384.271 394.27Z"

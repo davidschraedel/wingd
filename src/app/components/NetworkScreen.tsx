@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { Search, UserPlus, ArrowLeft } from "lucide-react";
-import { BottomNav } from "./BottomNav";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -238,7 +237,6 @@ export function NetworkScreen({
         </div>
       )}
 
-      <BottomNav active="network" onNavigate={onNavigate} />
     </div>
   );
 }

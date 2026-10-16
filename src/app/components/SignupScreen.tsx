@@ -41,8 +41,7 @@ export function SignupScreen({
           >
             <div className="w-64 h-40 lg:w-96 lg:h-48 p-1 lg:p-4 rounded-2xl flex items-center justify-center mx-auto mb-[16px] mt-[0px]">
               <HeartHandshakeIcon
-                className="h-auto"
-                size={68}
+                className="w-full h-auto max-h-40 object-contain"
               />
             </div>
             <h1 className="text-[#3A3A45] mb-2 text-[20px] font-bold not-italic">

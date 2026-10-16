@@ -75,8 +75,7 @@ export function SendIntroductionScreen({
     {
       id: "1",
       name: "Sarah Johnson",
-      avatar:
-        "https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/sarah.jpg",
       fallback: "SJ",
       interests: ["Hiking", "Photography"],
       type: "circle",
@@ -84,8 +83,7 @@ export function SendIntroductionScreen({
     {
       id: "2",
       name: "Mike Chen",
-      avatar:
-        "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/mike.jpg",
       fallback: "MC",
       interests: ["Coffee", "Tech"],
       type: "circle",
@@ -93,8 +91,7 @@ export function SendIntroductionScreen({
     {
       id: "3",
       name: "Emily Roberts",
-      avatar:
-        "https://images.unsplash.com/photo-1706025090794-7ade2c1b6208?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/emily.jpg",
       fallback: "ER",
       interests: ["Art", "Music"],
       type: "circle",
@@ -102,8 +99,7 @@ export function SendIntroductionScreen({
     {
       id: "4",
       name: "Alex Martinez",
-      avatar:
-        "https://images.unsplash.com/photo-1760551937527-2bc6cfe45180?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200",
+      avatar: "/avatars/alex.jpg",
       fallback: "AM",
       interests: ["Fitness", "Travel"],
       type: "circle",
@@ -534,25 +530,28 @@ export function SendIntroductionScreen({
     <div className="min-h-screen bg-[#FAFAFA] pb-24">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
-        <div className="flex items-center gap-3 mb-4">
-          <button
-            onClick={() => onNavigate("home")}
-            className="text-white hover:scale-110 transition-transform"
-          >
-            <ArrowLeft size={24} />
-          </button>
-          <h1 className="text-white flex-1">
-            Make Introduction
-          </h1>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <button
+              onClick={() => onNavigate("home")}
+              className="text-white hover:scale-110 transition-transform"
+            >
+              <ArrowLeft size={24} />
+            </button>
+            <h1 className="text-white flex-1">
+              Make Introduction
+            </h1>
+          </div>
+          <p className="text-white/90 text-sm">
+            Connect two people who might hit it off - from your
+            circle or invite them to join
+          </p>
         </div>
-        <p className="text-white/90 text-sm">
-          Connect two people who might hit it off - from your
-          circle or invite them to join
-        </p>
       </div>
 
       {/* Content */}
       <div className="px-6 mt-6">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
         {preSelectedPerson ? (
           <>
             <h3 className="mb-3">
@@ -715,6 +714,7 @@ export function SendIntroductionScreen({
             </span>
           )}
         </Button>
+        </div>
       </div>
     </div>
   );
