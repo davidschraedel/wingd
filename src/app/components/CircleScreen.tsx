@@ -344,7 +344,7 @@ export function CircleScreen({
           <div className="flex items-center justify-between gap-3 mb-4">
             <Button
               onClick={() => onNavigate("add-to-circle")}
-              className="bg-white/20 hover:bg-white/25 text-white border-0 rounded-full shadow-sm px-6"
+              className="bg-white/20 hover:bg-white text-white hover:text-[#5cb844] border-0 rounded-full shadow-sm hover:shadow-md transition-all active:scale-95 px-6"
             >
               <UserPlus size={20} className="mr-2" />
               Add to Circle
