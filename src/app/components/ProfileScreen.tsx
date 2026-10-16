@@ -146,12 +146,6 @@ export function ProfileScreen({
           label: "Account Settings",
           action: "settings",
         },
-        {
-          icon: Bell,
-          label: "Notifications",
-          action: "notifications",
-          toggle: true,
-        },
       ],
     },
     {
@@ -287,11 +281,7 @@ export function ProfileScreen({
                   return (
                     <button
                       key={item.label}
-                      onClick={() => {
-                        if (!item.toggle) {
-                          handleMenuClick(item.action);
-                        }
-                      }}
+                      onClick={() => handleMenuClick(item.action)}
                       className={`w-full flex items-center gap-3 px-5 py-4 hover:bg-gray-50 transition-colors ${index !== section.items.length - 1
                         ? "border-b border-gray-100"
                         : ""
@@ -306,24 +296,10 @@ export function ProfileScreen({
                       <span className="flex-1 text-left text-gray-800 font-medium text-sm">
                         {item.label}
                       </span>
-                      {item.toggle ? (
-                        <Switch
-                          defaultChecked={notificationsEnabled}
-                          onCheckedChange={(checked) => {
-                            setNotificationsEnabled(checked);
-                            toast(
-                              checked
-                                ? "Notifications enabled"
-                                : "Notifications disabled"
-                            );
-                          }}
-                        />
-                      ) : (
-                        <ChevronRight
-                          size={18}
-                          className="text-gray-400"
-                        />
-                      )}
+                      <ChevronRight
+                        size={18}
+                        className="text-gray-400"
+                      />
                     </button>
                   );
                 })}
@@ -526,13 +502,45 @@ export function ProfileScreen({
                   Account Settings
                 </DialogTitle>
                 <DialogDescription className="text-xs text-gray-500">
-                  Manage privacy, matchmaking preferences, and prototype options
+                  Manage notifications, privacy, and account preferences
                 </DialogDescription>
               </div>
             </div>
           </DialogHeader>
 
           <div className="space-y-5 py-2">
+            {/* Notifications Section */}
+            <div>
+              <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2.5">
+                <Bell size={12} />
+                Notifications
+              </div>
+
+              <div className="space-y-3 bg-gray-50 p-3.5 rounded-2xl border border-gray-100">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold text-gray-800">
+                      Notifications
+                    </p>
+                    <p className="text-[11px] text-gray-500">
+                      Receive alerts for introductions, messages, and circle updates
+                    </p>
+                  </div>
+                  <Switch
+                    checked={notificationsEnabled}
+                    onCheckedChange={(val) => {
+                      setNotificationsEnabled(val);
+                      toast(
+                        val
+                          ? "Notifications enabled"
+                          : "Notifications disabled"
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* Privacy Section */}
             <div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2.5">
@@ -592,6 +600,7 @@ export function ProfileScreen({
                   variant="outline"
                   size="sm"
                   onClick={() => {
+                    setNotificationsEnabled(true);
                     setGhostMode(false);
                     setShowMutual(true);
                     setReadReceipts(true);

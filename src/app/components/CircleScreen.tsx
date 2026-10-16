@@ -143,6 +143,7 @@ export function CircleScreen({
       name: "Jordan Lee",
       mutualFriends: 0,
       interests: ["Reading", "Cooking"],
+      avatar: "/avatars/jordan.jpg",
       fallback: "JL",
       status: "suggested",
       bio: "Book lover and amateur baker. Looking to exchange book recommendations and sourdough recipes.",
@@ -218,6 +219,25 @@ export function CircleScreen({
         "You both share a passion for art and coffee. I think you'd really enjoy each other's company!",
       createdAt: "1 week ago",
       waitingFor: [],
+    },
+  ]);
+
+  const [matchedInvitations, setMatchedInvitations] = useState([
+    {
+      id: 201,
+      person1: {
+        id: 4,
+        name: "Alex Martinez",
+        avatar: "/avatars/alex.jpg",
+        fallback: "AM",
+      },
+      person2: {
+        id: 9,
+        name: "Jordan Lee",
+        avatar: "/avatars/jordan.jpg",
+        fallback: "JL",
+      },
+      createdAt: "3 days ago",
     },
   ]);
 
@@ -342,7 +362,7 @@ export function CircleScreen({
               value="invites"
               className="rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#77d75b] data-[state=active]:to-[#5cb844] data-[state=active]:text-white"
             >
-              Intros Given ({pendingInvitations.length})
+              Intros Given ({pendingInvitations.length + matchedInvitations.length})
             </TabsTrigger>
           </TabsList>
 
@@ -819,6 +839,84 @@ export function CircleScreen({
                 </motion.div>
               ))
             )}
+
+            {/* Matched Introduction Entry */}
+            {matchedInvitations.map((match, index) => (
+              <motion.div
+                key={match.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: (pendingInvitations.length + index) * 0.1,
+                }}
+                className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-all"
+              >
+                <div className="flex items-center justify-between gap-3 sm:gap-6">
+                  {/* Person 1: Avatar & Name */}
+                  <div
+                    className="flex items-center gap-2.5 sm:gap-3 min-w-0 cursor-pointer group shrink-0"
+                    onClick={() => {
+                      const person = connections.find(
+                        (c) => c.id === match.person1.id,
+                      );
+                      if (person) setSelectedProfile(person);
+                    }}
+                  >
+                    <Avatar className="w-10 h-10 sm:w-11 sm:h-11 border border-gray-200 shrink-0 group-hover:scale-105 transition-transform">
+                      {match.person1.avatar && (
+                        <AvatarImage
+                          src={match.person1.avatar}
+                          alt={match.person1.name}
+                        />
+                      )}
+                      <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white font-medium text-xs">
+                        {match.person1.fallback}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0">
+                      <span className="font-medium text-gray-900 text-xs sm:text-sm truncate block group-hover:text-[#5cb844] transition-colors">
+                        {match.person1.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Center: simple "matched with" */}
+                  <div className="flex-1 text-center px-2 min-w-0">
+                    <span className="text-xs sm:text-sm text-gray-400 font-normal whitespace-nowrap">
+                      matched with
+                    </span>
+                  </div>
+
+                  {/* Person 2: Avatar & Name */}
+                  <div
+                    className="flex items-center gap-2.5 sm:gap-3 min-w-0 cursor-pointer group shrink-0 justify-end"
+                    onClick={() => {
+                      const person = connections.find(
+                        (c) => c.id === match.person2.id,
+                      );
+                      if (person) setSelectedProfile(person);
+                    }}
+                  >
+                    <Avatar className="w-10 h-10 sm:w-11 sm:h-11 border border-gray-200 shrink-0 group-hover:scale-105 transition-transform">
+                      {match.person2.avatar && (
+                        <AvatarImage
+                          src={match.person2.avatar}
+                          alt={match.person2.name}
+                        />
+                      )}
+                      <AvatarFallback className="bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white font-medium text-xs">
+                        {match.person2.fallback}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0">
+                      <span className="font-medium text-gray-900 text-xs sm:text-sm truncate block group-hover:text-[#5cb844] transition-colors">
+                        {match.person2.name}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </TabsContent>
         </Tabs>
         </div>
