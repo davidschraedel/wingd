@@ -20,9 +20,10 @@ import { Input } from "./ui/input";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { Person } from "../App";
+import { useAppStore } from "../context/AppContext";
 
 interface SendIntroductionScreenProps {
-  onNavigate: (screen: string) => void;
+  onNavigate: (screen: string, data?: any) => void;
   preSelectedPerson?: Person | null;
 }
 
@@ -40,6 +41,7 @@ export function SendIntroductionScreen({
   onNavigate,
   preSelectedPerson,
 }: SendIntroductionScreenProps) {
+  const { addIntroGiven } = useAppStore();
   const [selectedPerson1, setSelectedPerson1] =
     useState<SelectedPerson | null>(null);
   const [selectedPerson2, setSelectedPerson2] =
@@ -218,11 +220,37 @@ export function SendIntroductionScreen({
       setIsSending(true);
 
       // Simulate sending
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
       const hasEmailInvite =
         selectedPerson1.type === "email" ||
         selectedPerson2.type === "email";
+
+      const p1Name = selectedPerson1.name || "Unknown";
+      const p2Name = selectedPerson2.name || "Unknown";
+
+      addIntroGiven({
+        person1: {
+          name: p1Name,
+          email: selectedPerson1.type === "email" ? (selectedPerson1.email || null) : null,
+          isUser: selectedPerson1.type === "circle",
+          avatar: selectedPerson1.avatar || "",
+          fallback: selectedPerson1.fallback || p1Name.slice(0, 2).toUpperCase(),
+        },
+        person2: {
+          name: p2Name,
+          email: selectedPerson2.type === "email" ? (selectedPerson2.email || null) : null,
+          isUser: selectedPerson2.type === "circle",
+          avatar: selectedPerson2.avatar || "",
+          fallback: selectedPerson2.fallback || p2Name.slice(0, 2).toUpperCase(),
+        },
+        message: message.trim(),
+        createdAt: "Just now",
+        waitingFor: [
+          ...(selectedPerson1.type === "email" && selectedPerson1.name ? [selectedPerson1.name] : []),
+          ...(selectedPerson2.type === "email" && selectedPerson2.name ? [selectedPerson2.name] : []),
+        ],
+      });
 
       if (hasEmailInvite) {
         const emailRecipients = [];
@@ -232,18 +260,18 @@ export function SendIntroductionScreen({
           emailRecipients.push(selectedPerson2.name);
 
         toast.success("Introduction created!", {
-          description: `Email invitation${emailRecipients.length > 1 ? "s" : ""} sent to ${emailRecipients.join(" and ")}. The introduction will be activated once ${emailRecipients.length > 1 ? "they join" : "they join"} the app.`,
+          description: `Email invitation${emailRecipients.length > 1 ? "s" : ""} sent to ${emailRecipients.join(" and ")}. Added to your Intros Given list!`,
           icon: <Mail className="text-[#1da6e0]" />,
         });
       } else {
         toast.success("Introduction sent successfully!", {
-          description: `${selectedPerson1?.name} and ${selectedPerson2?.name} will be notified.`,
+          description: `${p1Name} and ${p2Name} will be notified. Added to your Intros Given list!`,
           icon: <Check className="text-green-500" />,
         });
       }
 
       setIsSending(false);
-      onNavigate("circle");
+      onNavigate("circle", { tab: "invites" });
     }
   };
 

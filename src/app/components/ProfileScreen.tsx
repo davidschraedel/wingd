@@ -40,6 +40,7 @@ import {
 } from "./ui/accordion";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAppStore } from "../context/AppContext";
 
 interface ProfileScreenProps {
   onNavigate: (screen: string) => void;
@@ -51,14 +52,13 @@ export function ProfileScreen({
   onLogout,
 }: ProfileScreenProps) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-  // Profile Data State
-  const [profile, setProfile] = useState({
-    name: "Sam Doe",
-    email: "sam.doe@email.com",
-    bio: "Outdoor adventurer and pastry chef. Always open to new friends!",
-    interests: ["Hiking", "Photography", "Travel"],
-  });
+  const {
+    userProfile: profile,
+    updateProfile,
+    circleCount,
+    totalIntrosGiven,
+    matchesCount,
+  } = useAppStore();
 
   // Modal States
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
@@ -92,7 +92,7 @@ export function ProfileScreen({
       toast.error("Name cannot be empty");
       return;
     }
-    setProfile({
+    updateProfile({
       name: editName.trim(),
       email: editEmail.trim(),
       bio: editBio.trim(),
@@ -158,9 +158,9 @@ export function ProfileScreen({
   ];
 
   const stats = [
-    { label: "Circle", value: "24" },
-    { label: "Given", value: "42" },
-    { label: "Matches", value: "5" },
+    { label: "Circle", value: circleCount },
+    { label: "Given", value: totalIntrosGiven },
+    { label: "Matches", value: matchesCount },
   ];
 
   const handleMenuClick = (action?: string) => {
