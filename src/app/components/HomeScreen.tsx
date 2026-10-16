@@ -13,6 +13,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "./ui/avatar";
+import { HeartHandshakeIcon } from "./HeartHandshakeIcon";
 
 interface HomeScreenProps {
   onNavigate: (screen: string, data?: any) => void;
@@ -98,10 +99,18 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full md:w-2/3 max-w-4xl mx-auto"
+          className="w-full md:w-2/3 max-w-4xl mx-auto flex items-center justify-between gap-4"
         >
-          <h2 className="text-white mb-1">Welcome back,</h2>
-          <h1 className="text-white">Sam 👋</h1>
+          <div>
+            <h2 className="text-white/90 text-sm sm:text-base font-medium mb-0.5">Welcome back,</h2>
+            <h1 className="text-white text-2xl sm:text-3xl font-bold tracking-tight">Sam 👋</h1>
+          </div>
+
+          {/* Wingd Brand Badge */}
+          <div className=" pt-1 rounded-3xl flex items-center gap-2 select-none shrink-0">
+            <HeartHandshakeIcon className="w-28 h-auto" />
+
+          </div>
         </motion.div>
       </div>
 

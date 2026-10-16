@@ -170,7 +170,7 @@ export function IntroductionsScreen({
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
         <div className="w-full md:w-2/3 max-w-4xl mx-auto">
-          <h1 className="text-white">Introduced</h1>
+          <h1 className="text-white text-2xl sm:text-3xl font-bold tracking-tight">Introduced</h1>
           <p className="text-white/90 text-sm mt-1">
             People introduced to you by your circle
           </p>
