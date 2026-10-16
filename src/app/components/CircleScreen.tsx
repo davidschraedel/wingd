@@ -141,11 +141,11 @@ export function CircleScreen({
     {
       id: 9,
       name: "Jordan Lee",
-      mutualFriends: 0,
+      mutualFriends: 4,
       interests: ["Reading", "Cooking"],
       avatar: "/avatars/jordan.jpg",
       fallback: "JL",
-      status: "suggested",
+      status: "connected",
       bio: "Book lover and amateur baker. Looking to exchange book recommendations and sourdough recipes.",
     },
     {
@@ -156,6 +156,16 @@ export function CircleScreen({
       fallback: "TS",
       status: "suggested",
       bio: "Songwriter, musician, and storyteller. Believer in warm connections and creative sparks.",
+    },
+    {
+      id: 11,
+      name: "Chris Anderson",
+      mutualFriends: 2,
+      interests: ["Running", "Books"],
+      avatar: "/avatars/chris.jpg",
+      fallback: "CA",
+      status: "suggested",
+      bio: "Marathon runner and bookstore browser. Always looking for new routes and great reads.",
     },
   ]);
 
