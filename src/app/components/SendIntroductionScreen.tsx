@@ -530,25 +530,28 @@ export function SendIntroductionScreen({
     <div className="min-h-screen bg-[#FAFAFA] pb-24">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
-        <div className="flex items-center gap-3 mb-4">
-          <button
-            onClick={() => onNavigate("home")}
-            className="text-white hover:scale-110 transition-transform"
-          >
-            <ArrowLeft size={24} />
-          </button>
-          <h1 className="text-white flex-1">
-            Make Introduction
-          </h1>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <button
+              onClick={() => onNavigate("home")}
+              className="text-white hover:scale-110 transition-transform"
+            >
+              <ArrowLeft size={24} />
+            </button>
+            <h1 className="text-white flex-1">
+              Make Introduction
+            </h1>
+          </div>
+          <p className="text-white/90 text-sm">
+            Connect two people who might hit it off - from your
+            circle or invite them to join
+          </p>
         </div>
-        <p className="text-white/90 text-sm">
-          Connect two people who might hit it off - from your
-          circle or invite them to join
-        </p>
       </div>
 
       {/* Content */}
       <div className="px-6 mt-6">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
         {preSelectedPerson ? (
           <>
             <h3 className="mb-3">
@@ -711,6 +714,7 @@ export function SendIntroductionScreen({
             </span>
           )}
         </Button>
+        </div>
       </div>
     </div>
   );

@@ -236,41 +236,44 @@ export function CircleScreen({
     <div className="min-h-screen bg-[#FAFAFA] pb-24">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#77d75b] to-[#5cb844] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
-        <div className="flex items-center justify-between gap-3 mb-4">
-          <Button
-            onClick={() => onNavigate("add-to-circle")}
-            className="bg-white/20 hover:bg-white/25 text-white border-0 rounded-full shadow-sm px-6"
-          >
-            <UserPlus size={20} className="mr-2" />
-            Add to Circle
-          </Button>
-          <Button
-            onClick={() => onNavigate("send-introduction")}
-            className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white border-0 rounded-full shadow-sm min-w-24"
-          >
-            <User size={20} /> {"->"} <User size={20} />
-          </Button>
-        </div>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <Button
+              onClick={() => onNavigate("add-to-circle")}
+              className="bg-white/20 hover:bg-white/25 text-white border-0 rounded-full shadow-sm px-6"
+            >
+              <UserPlus size={20} className="mr-2" />
+              Add to Circle
+            </Button>
+            <Button
+              onClick={() => onNavigate("send-introduction")}
+              className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white border-0 rounded-full shadow-sm min-w-24"
+            >
+              <User size={20} /> {"->"} <User size={20} />
+            </Button>
+          </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-            size={20}
-          />
-          <Input
-            type="text"
-            placeholder="Search your circle..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 bg-white/95 border-0 rounded-2xl py-6 shadow-sm"
-          />
+          {/* Search */}
+          <div className="relative">
+            <Search
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={20}
+            />
+            <Input
+              type="text"
+              placeholder="Search your circle..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-12 bg-white/95 border-0 rounded-2xl py-6 shadow-sm"
+            />
+          </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="px-6 mt-6">
-        <Tabs defaultValue="circle" className="w-full">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <Tabs defaultValue="circle" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
             <TabsTrigger
               value="circle"
@@ -680,6 +683,7 @@ export function CircleScreen({
             )}
           </TabsContent>
         </Tabs>
+        </div>
       </div>
 
       <BottomNav active="circle" onNavigate={onNavigate} />

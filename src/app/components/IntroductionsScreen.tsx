@@ -155,14 +155,17 @@ export function IntroductionsScreen({
     <div className="min-h-screen bg-[#FAFAFA] pb-24">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
-        <p className="text-white/90 text-sm mt-1">
-          Your dating connections and pending intros
-        </p>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <p className="text-white/90 text-sm mt-1">
+            Your dating connections and pending intros
+          </p>
+        </div>
       </div>
 
       {/* Tabs */}
       <div className="px-6 mt-6">
-        <Tabs defaultValue="pending" className="w-full">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <Tabs defaultValue="pending" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
             <TabsTrigger
               value="pending"
@@ -416,6 +419,7 @@ export function IntroductionsScreen({
             )}
           </TabsContent>
         </Tabs>
+        </div>
       </div>
 
       <BottomNav

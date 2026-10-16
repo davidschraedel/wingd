@@ -104,22 +104,25 @@ export function AddToCircleScreen({
     <div className="min-h-screen bg-[#FAFAFA] pb-24">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#77d75b] to-[#5cb844] px-6 pt-12 pb-6 rounded-b-3xl shadow-sm">
-        <button
-          onClick={() => onNavigate("circle")}
-          className="mb-4 text-white flex items-center gap-2 hover:gap-3 transition-all"
-        >
-          <ArrowLeft size={20} />
-          <span>Back to Circle</span>
-        </button>
-        <h2 className="text-white mb-2">Add to Circle</h2>
-        <p className="text-white/90 text-sm">
-          Browse people you may know or invite via email
-        </p>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <button
+            onClick={() => onNavigate("circle")}
+            className="mb-4 text-white flex items-center gap-2 hover:gap-3 transition-all"
+          >
+            <ArrowLeft size={20} />
+            <span>Back to Circle</span>
+          </button>
+          <h2 className="text-white mb-2">Add to Circle</h2>
+          <p className="text-white/90 text-sm">
+            Browse people you may know or invite via email
+          </p>
+        </div>
       </div>
 
       {/* Content */}
       <div className="px-6 mt-6">
-        <Tabs defaultValue="browse" className="w-full">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <Tabs defaultValue="browse" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6 bg-white rounded-2xl p-1 shadow-sm">
             <TabsTrigger
               value="browse"
@@ -298,6 +301,7 @@ export function AddToCircleScreen({
             </div>
           </TabsContent>
         </Tabs>
+        </div>
       </div>
     </div>
   );

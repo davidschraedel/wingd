@@ -62,7 +62,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FAFAFA] w-full">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentScreen}

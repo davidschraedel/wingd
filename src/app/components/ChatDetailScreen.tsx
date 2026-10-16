@@ -57,7 +57,7 @@ export function ChatDetailScreen({ onNavigate }: ChatDetailScreenProps) {
     <div className="h-screen flex flex-col bg-[#FAFAFA]">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#1da6e0] to-[#05638f] px-6 pt-12 pb-4 shadow-sm">
-        <div className="flex items-center gap-3">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto flex items-center gap-3">
           <button
             onClick={() => onNavigate('chats')}
             className="text-white"
@@ -79,54 +79,58 @@ export function ChatDetailScreen({ onNavigate }: ChatDetailScreenProps) {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-        {messages.map((msg, index) => (
-          <motion.div
-            key={msg.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-[75%] rounded-2xl px-4 py-3 ${
-                msg.sender === 'me'
-                  ? 'bg-white text-gray-800 shadow-sm border border-gray-100'
-                  : 'bg-gradient-to-r from-[#1da6e0] to-[#05638f] text-white shadow-sm'
-              }`}
+      <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto space-y-4">
+          {messages.map((msg, index) => (
+            <motion.div
+              key={msg.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
             >
-              <p className={msg.sender === 'me' ? 'text-gray-800' : 'text-white'}>
-                {msg.text}
-              </p>
-              <span
-                className={`text-xs mt-1 block ${
-                  msg.sender === 'me' ? 'text-gray-400' : 'text-white/80'
+              <div
+                className={`max-w-[75%] rounded-2xl px-4 py-3 ${
+                  msg.sender === 'me'
+                    ? 'bg-white text-gray-800 shadow-sm border border-gray-100'
+                    : 'bg-gradient-to-r from-[#1da6e0] to-[#05638f] text-white shadow-sm'
                 }`}
               >
-                {msg.time}
-              </span>
-            </div>
-          </motion.div>
-        ))}
+                <p className={msg.sender === 'me' ? 'text-gray-800' : 'text-white'}>
+                  {msg.text}
+                </p>
+                <span
+                  className={`text-xs mt-1 block ${
+                    msg.sender === 'me' ? 'text-gray-400' : 'text-white/80'
+                  }`}
+                >
+                  {msg.time}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Input */}
       <div className="bg-white border-t border-[#F5F5F7] px-6 py-4 shadow-sm">
-        <form onSubmit={handleSend} className="flex items-center gap-3">
-          <Input
-            type="text"
-            placeholder="Type a message..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="flex-1 bg-gray-100 border-0 rounded-full px-6 py-6"
-          />
-          <Button
-            type="submit"
-            className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full w-12 h-12 p-0 border-0 shadow-sm"
-          >
-            <Send size={20} />
-          </Button>
-        </form>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <form onSubmit={handleSend} className="flex items-center gap-3">
+            <Input
+              type="text"
+              placeholder="Type a message..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="flex-1 bg-gray-100 border-0 rounded-full px-6 py-6"
+            />
+            <Button
+              type="submit"
+              className="bg-gradient-to-r from-[#1da6e0] to-[#05638f] hover:from-[#05638f] hover:to-[#1da6e0] text-white rounded-full w-12 h-12 p-0 border-0 shadow-sm"
+            >
+              <Send size={20} />
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );

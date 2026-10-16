@@ -110,6 +110,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          className="w-full md:w-2/3 max-w-4xl mx-auto"
         >
           <h2 className="text-white mb-1">Welcome back,</h2>
           <h1 className="text-white">Sam 👋</h1>
@@ -118,118 +119,122 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
 
       {/* Dashboard Section - Visually Separated */}
       <div className="px-6 -mt-6 mb-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-3xl shadow-lg p-6 border-2 border-[#1da6e0]/10"
-        >
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles size={20} className="text-[#1da6e0]" />
-            <h3 className="text-[#1da6e0]">Today's Summary</h3>
-          </div>
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-3xl shadow-lg p-6 border-2 border-[#1da6e0]/10"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles size={20} className="text-[#1da6e0]" />
+              <h3 className="text-[#1da6e0]">Today's Summary</h3>
+            </div>
 
-          <p className="text-sm text-gray-600 mb-6 leading-relaxed">
-            {activitySummary}
-          </p>
+            <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+              {activitySummary}
+            </p>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-3 gap-3">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <motion.button
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => onNavigate(stat.screen)}
-                  className="bg-gradient-to-br from-[#FAFAFA] to-white rounded-2xl p-4 text-center hover:shadow-md transition-all border border-gray-100"
-                >
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2"
-                    style={{
-                      backgroundColor: `${stat.color}20`,
-                    }}
+            {/* Stats Grid */}
+            <div className="grid grid-cols-3 gap-3">
+              {stats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <motion.button
+                    key={stat.label}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => onNavigate(stat.screen)}
+                    className="bg-gradient-to-br from-[#FAFAFA] to-white rounded-2xl p-4 text-center hover:shadow-md transition-all border border-gray-100"
                   >
-                    <Icon
-                      size={20}
-                      style={{ color: stat.color }}
-                    />
-                  </div>
-                  <div className="mb-1">{stat.value}</div>
-                  <div className="text-xs text-gray-500">
-                    {stat.label}
-                  </div>
-                </motion.button>
-              );
-            })}
-          </div>
-        </motion.div>
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2"
+                      style={{
+                        backgroundColor: `${stat.color}20`,
+                      }}
+                    >
+                      <Icon
+                        size={20}
+                        style={{ color: stat.color }}
+                      />
+                    </div>
+                    <div className="mb-1">{stat.value}</div>
+                    <div className="text-xs text-gray-500">
+                      {stat.label}
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Recent Activity */}
       <div className="px-6">
-        <h3 className="mb-3">Recent Activity</h3>
-        <div className="space-y-3">
-          {recentActivity.map((activity, index) => (
-            <motion.div
-              key={activity.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 + index * 0.1 }}
-              className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer"
-            >
-              <div className="flex items-start gap-3">
-                <Avatar className="w-12 h-12 border-2 border-gray-100">
-                  <AvatarImage
-                    src={activity.avatar}
-                    alt={activity.name}
-                  />
-                  <AvatarFallback
-                    className={`${
-                      activity.type === "introduction"
-                        ? "bg-gradient-to-br from-[#ff9883] to-[#ffb8a8] text-white"
-                        : "bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white"
-                    }`}
-                  >
-                    {activity.fallback}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <div className="mb-1">
-                    <span>{activity.name}</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-2">
-                    {activity.action}
-                    {activity.target && (
-                      <span className="text-[#1da6e0] ml-1">
-                        {activity.target}
-                      </span>
-                    )}
-                  </p>
-                  {activity.tags.length > 0 && (
-                    <div className="flex gap-2 flex-wrap">
-                      {activity.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={`px-3 py-1 rounded-full text-xs ${
-                            activity.type === "introduction"
-                              ? "bg-[#FFF0ED] text-[#ff9883]"
-                              : "bg-[#F0F9ED] text-[#77d75b]"
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
+        <div className="w-full md:w-2/3 max-w-4xl mx-auto">
+          <h3 className="mb-3">Recent Activity</h3>
+          <div className="space-y-3">
+            {recentActivity.map((activity, index) => (
+              <motion.div
+                key={activity.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+                className="bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer"
+              >
+                <div className="flex items-start gap-3">
+                  <Avatar className="w-12 h-12 border-2 border-gray-100">
+                    <AvatarImage
+                      src={activity.avatar}
+                      alt={activity.name}
+                    />
+                    <AvatarFallback
+                      className={`${
+                        activity.type === "introduction"
+                          ? "bg-gradient-to-br from-[#ff9883] to-[#ffb8a8] text-white"
+                          : "bg-gradient-to-br from-[#77d75b] to-[#a0e88b] text-white"
+                      }`}
+                    >
+                      {activity.fallback}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="mb-1">
+                      <span>{activity.name}</span>
                     </div>
-                  )}
+                    <p className="text-sm text-gray-600 mb-2">
+                      {activity.action}
+                      {activity.target && (
+                        <span className="text-[#1da6e0] ml-1">
+                          {activity.target}
+                        </span>
+                      )}
+                    </p>
+                    {activity.tags.length > 0 && (
+                      <div className="flex gap-2 flex-wrap">
+                        {activity.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className={`px-3 py-1 rounded-full text-xs ${
+                              activity.type === "introduction"
+                                ? "bg-[#FFF0ED] text-[#ff9883]"
+                                : "bg-[#F0F9ED] text-[#77d75b]"
+                            }`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-xs text-gray-400">
+                    {activity.time}
+                  </span>
                 </div>
-                <span className="text-xs text-gray-400">
-                  {activity.time}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 

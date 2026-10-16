@@ -16,7 +16,7 @@ export function BottomNav({ active, onNavigate }: BottomNavProps) {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#F5F5F7] px-4 py-2 z-50 shadow-sm">
-      <div className="max-w-md mx-auto flex justify-around items-center">
+      <div className="w-full md:w-2/3 max-w-4xl mx-auto flex justify-around items-center">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
