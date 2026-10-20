@@ -13,7 +13,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "./ui/avatar";
-import { HeartHandshakeIcon } from "./HeartHandshakeIcon";
 import { useAppStore } from "../context/AppContext";
 
 interface HomeScreenProps {
@@ -108,8 +107,11 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
 
           {/* Wingd Brand Badge */}
           <div className=" pt-1 rounded-3xl flex items-center gap-2 select-none shrink-0">
-            <HeartHandshakeIcon className="w-28 h-auto" />
-
+            <img
+              src={`${import.meta.env.BASE_URL}WingdLogo4.svg`}
+              alt="Wingd Logo"
+              className="w-28 h-auto object-contain"
+            />
           </div>
         </motion.div>
       </div>

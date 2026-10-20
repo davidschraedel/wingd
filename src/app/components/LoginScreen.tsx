@@ -1,5 +1,4 @@
 import { motion } from "motion/react";
-import { HeartHandshakeIcon } from "./HeartHandshakeIcon";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -41,7 +40,9 @@ export function LoginScreen({ onNavigate, onLogin }: LoginScreenProps) {
             className="text-center mb-8"
           >
             <div className="w-64 h-40 lg:w-96 lg:h-48 p-1 lg:p-4 rounded-2xl flex items-center justify-center mx-auto mb-[16px] mt-[0px]">
-              <HeartHandshakeIcon
+              <img
+                src={`${import.meta.env.BASE_URL}WingdLogo4.svg`}
+                alt="Wingd Logo"
                 className="w-full h-auto max-h-40 object-contain"
               />
             </div>

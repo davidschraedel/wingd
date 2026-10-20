@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" fill="none">
+  <defs>
+    <linearGradient id="br-g-out" x1="38" y1="20" x2="285" y2="395" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8CE872" />
+      <stop offset="100%" stop-color="#27964C" />
+    </linearGradient>
+    <linearGradient id="br-g-in" x1="65" y1="50" x2="260" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#48B042" />
+      <stop offset="100%" stop-color="#196E35" />
+    </linearGradient>
+    <linearGradient id="br-b-out" x1="170" y1="0" x2="430" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#42CCFA" />
+      <stop offset="100%" stop-color="#0D5C8C" />
+    </linearGradient>
+    <linearGradient id="br-b-in" x1="210" y1="40" x2="390" y2="210" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1270A1" />
+      <stop offset="100%" stop-color="#33C0F5" />
+    </linearGradient>
+    <linearGradient id="br-c-out" x1="562" y1="20" x2="220" y2="395" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFAF9C" />
+      <stop offset="100%" stop-color="#D44E4A" />
+    </linearGradient>
+    <linearGradient id="br-c-in" x1="535" y1="50" x2="250" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DE6250" />
+      <stop offset="100%" stop-color="#AD3532" />
+    </linearGradient>
+  </defs>
+
+  <!-- MIDDLE SECTION (Blue Matchmaker Arch at Top-Center) -->
+  <g id="middle-bridge">
+    <path fill="url(#br-b-out)" d="
+      M 208.08 221.92
+      A 130 130 0 1 1 391.92 221.92
+      L 344.55 269.30
+      L 328.64 253.39
+      L 376.01 206.01
+      A 107.5 107.5 0 1 0 223.99 206.01
+      Z" />
+    <path fill="url(#br-b-in)" d="
+      M 223.99 206.01
+      A 107.5 107.5 0 1 1 376.01 206.01
+      L 328.64 253.39
+      L 312.73 237.48
+      L 360.10 190.10
+      A 85 85 0 1 0 239.90 190.10
+      Z" />
+  </g>
+
+  <!-- LEFT SECTION (Green Person: Wraps Left Heart and Meets Coral at Bottom X) -->
+  <g id="left-person">
+    <path fill="url(#br-g-out)" d="
+      M 200.28 20.64
+      A 130 130 0 0 0 38.08 221.92
+      L 208.00 391.85
+      Q 215.00 398.85 222.00 391.85
+      L 287.27 326.58
+      L 271.36 310.67
+      L 215.00 367.03
+      L 53.99 206.01
+      A 107.5 107.5 0 0 1 184.57 37.38
+      A 148 148 0 0 1 200.28 20.64
+      Z" />
+    <path fill="url(#br-g-in)" d="
+      M 184.57 37.38
+      A 107.5 107.5 0 0 0 53.99 206.01
+      L 215.00 367.03
+      L 271.36 310.67
+      L 255.45 294.76
+      L 215.00 335.21
+      L 69.90 190.10
+      A 85 85 0 0 1 171.83 56.00
+      A 148 148 0 0 1 184.57 37.38
+      Z" />
+  </g>
+
+  <!-- RIGHT SECTION (Coral Person: Wraps Right Heart and Sweeps Through Bottom X to Meet Blue) -->
+  <g id="right-person">
+    <path fill="url(#br-c-out)" d="
+      M 399.72 20.64
+      A 130 130 0 0 1 561.92 221.92
+      L 392.00 391.85
+      Q 385.00 398.85 378.00 391.85
+      L 220.81 234.65
+      L 236.72 218.74
+      L 385.00 367.03
+      L 546.01 206.01
+      A 107.5 107.5 0 0 0 415.43 37.38
+      A 148 148 0 0 0 399.72 20.64
+      Z" />
+    <path fill="url(#br-c-in)" d="
+      M 415.43 37.38
+      A 107.5 107.5 0 0 1 546.01 206.01
+      L 385.00 367.03
+      L 236.72 218.74
+      L 252.63 202.83
+      L 385.00 335.21
+      L 530.10 190.10
+      A 85 85 0 0 0 428.17 56.00
+      A 148 148 0 0 0 415.43 37.38
+      Z" />
+  </g>
+</svg>
