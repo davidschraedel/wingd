@@ -110,7 +110,7 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
             <img
               src={`${import.meta.env.BASE_URL}WingdLogo4.svg`}
               alt="Wingd Logo"
-              className="w-28 h-auto object-contain"
+              className="w-28 p-3 h-auto object-contain"
             />
           </div>
         </motion.div>
